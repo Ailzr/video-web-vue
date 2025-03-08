@@ -5,10 +5,10 @@ type returnInfo<T> = {
 }
 
 class global{
-    private static path_: string = `http://10.208.88.71:8080`;
+    private static path_: string = `${window.location.protocol}//${window.location.host}`;
 
     static get path(): string{
-        return this.path_ + "/apis";
+        return this.path_ + "apis";
     }
 }
 
