@@ -29,7 +29,6 @@ import { useMessage } from "naive-ui";
 import { UserManager } from '../api/user';
   
   export default {
-    name: 'VideoUploadPage',
     setup() {
       const router = useRouter();
       if (!UserManager.isLogin()){

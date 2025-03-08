@@ -32,7 +32,9 @@ const refresh_username = ()=>{
 
 const go_user_page = ()=>{
   if (!UserManager.isLogin()){
-    router.push({name: 'RegisterAndLogin'});
+    router.push({ name: "RegisterAndLogin" }).then(() => {
+      location.reload(); // 强制刷新页面
+    });
     return;
   }
   refresh_username();
