@@ -38,7 +38,9 @@ const login = async ()=>{
         "nickname": formData.value.username,
         "password": formData.value.password
     })){
-        router.push({"name": "Index"});
+        router.push({"name": "Index"}).then(()=>{
+            location.reload();
+        });
     }else{
         message.error(isLogin ? "注册失败":"登录失败");
     }
