@@ -26,7 +26,7 @@ class myVideoManager {
 
     public playVideo(videoId: string) {
         let token = localStorage.getItem("video-web-golang-token");
-        axios.post(
+        axios.put(
             `${this.uri_}/incr-get-num`, 
             {
                 "video_id": videoId,
