@@ -27,10 +27,14 @@ class UserManager{
                 "email": email
             }
         )
+        if (response.status !== 200) {
+            return false;
+        }
         return response.data.code === 200;
     }
 
     public async registerAndLogin(user: User) {
+        console.log(this.uri_);
         let response = await axios.post(
             `${this.uri_}/login`,
             {
@@ -40,6 +44,9 @@ class UserManager{
                 "password": user.password,
             }
         )
+        if (response.status !== 200){
+            return false;
+        }
         if (response.data.code === 200){
             localStorage.setItem("video-web-golang-token", response.data.data.token);
             localStorage.setItem("video-web-golang-username", response.data.data.nickname);
@@ -62,7 +69,7 @@ class UserManager{
                 }
             }
         )
-        if (response.data.code !== 200){
+        if (response.status !== 200 || response.data.code !== 200){
             return null;
         }
         return response.data.data.history_list;
@@ -78,8 +85,8 @@ class UserManager{
                 }
             }
         )
-        if (response.data.code !== 200){
-            return null;
+        if (response.status !== 200 || response.data.code !== 200){
+            return null
         }
         return response.data.data.user_video_list;
     }

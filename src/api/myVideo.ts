@@ -18,7 +18,7 @@ class myVideoManager {
         let response = await axios.get(
             `${this.uri_}/video-list?page=${page}`,
         )
-        if (response.data.code !== 200){
+        if (response.status !== 200 || response.data.code !== 200){
             return null;
         }
         return response.data.data.video_list;
@@ -54,6 +54,9 @@ class myVideoManager {
                 }
             }
         )
+        if (response.status !== 200){
+            return false;
+        }
         if (response.data.code === 200){
             return true;
         }else{
@@ -67,7 +70,7 @@ class myVideoManager {
             `${this.uri_}/get-video-list-by-ids`,
             videoIds,
         )
-        if (response.data.code !== 200){
+        if (response.status !== 200 || response.data.code !== 200){
             return null;
         }
         return response.data.data.video_list;
