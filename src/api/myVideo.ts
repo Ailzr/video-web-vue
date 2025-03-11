@@ -39,7 +39,7 @@ class myVideoManager {
         )
     }
 
-    public async uploadVideo(face: File, video: File){
+    public async uploadVideo(face: File, video: File, progressCallback?: (progressEvent: any) => void){
         let token = localStorage.getItem("video-web-golang-token");
         const formData = new FormData();
         formData.append("face", face);
@@ -51,6 +51,11 @@ class myVideoManager {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "multipart/form-data",
+                },
+                onUploadProgress: progressEvent => {
+                    if (progressCallback) {
+                        progressCallback(progressEvent);
+                    }
                 }
             }
         )
