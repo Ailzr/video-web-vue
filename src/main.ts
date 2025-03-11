@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import {createRouter, createWebHistory} from "vue-router";
 
 import './base.css';
+import './assets/css/_theme.css';
 
 import App from './App.vue';
 import Index from "./views/Index.vue";

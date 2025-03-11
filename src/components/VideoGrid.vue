@@ -51,7 +51,9 @@ const processedVideos = computed(() => {
 }
 
 .video-card {
-  background-color: #2c2c2c;
+  /* background-color: #2c2c2c; */
+  background-color: var(--video-card-bgc);
+  color: var(--fontNormal);
   border: 0;
   border-radius: 15px;
   overflow: hidden;
@@ -68,7 +70,7 @@ const processedVideos = computed(() => {
 
 .video-details {
   padding: 15px;
-  color: #fff;
+  /* color: #fff; */
 }
 
 .video-title {
