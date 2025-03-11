@@ -51,16 +51,16 @@ const login = async ()=>{
     <div class="auth-container">
         <h2>{{ isLogin ? '登录' : '注册' }}</h2>
         <n-form class="auth-form">
-            <n-form-item label="用户名">
+            <n-form-item>
                 <n-input class="user-info" v-model:value="formData.email" placeholder="请输入邮箱" />
             </n-form-item>
-            <n-form-item v-if="!isLogin" label="用户名">
+            <n-form-item v-if="!isLogin">
                 <n-input class="user-info" v-model:value="formData.username" placeholder="请输入用户名" />
             </n-form-item>
-            <n-form-item label="密码">
+            <n-form-item>
                 <n-input class="user-info" v-model:value="formData.password" type="password" placeholder="请输入密码" />
             </n-form-item>
-            <n-form-item v-if="!isLogin" label="确认密码">
+            <n-form-item v-if="!isLogin">
                 <n-input class="user-info" v-model:value="formData.confirmPassword" type="password" placeholder="请确认密码" />
             </n-form-item>
             <n-form-item v-if="!isLogin">
@@ -69,7 +69,7 @@ const login = async ()=>{
             <div class="button-group">
                 <n-button v-if="!isLogin" type="primary" @click="getCode">获取验证码</n-button>
                 <n-button type="primary" @click="login">{{ isLogin ? '登录' : '注册' }}</n-button>
-                <n-button text @click="isLogin = !isLogin" style="color: white;">{{ isLogin ? '没有账号？注册' : '已有账号？登录' }}</n-button>
+                <n-button text @click="isLogin = !isLogin" style="color: var(--text-color);">{{ isLogin ? '没有账号？注册' : '已有账号？登录' }}</n-button>
             </div>
         </n-form>
     </div>
@@ -77,14 +77,14 @@ const login = async ()=>{
   
 <style scoped>
   .auth-container {
-    color: white;
+    color: var(--text-color);
     min-width: 540px;
     max-width: 720px;
     margin: 50px auto;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #1F2128;
+    background-color: var(--video-card-bgc);
     text-align: center;
   }
   .auth-form {
