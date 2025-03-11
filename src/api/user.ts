@@ -90,6 +90,30 @@ class UserManager{
         }
         return response.data.data.user_video_list;
     }
+
+    public async refreshToken(){
+        let token = localStorage.getItem("video-web-golang-token");
+        if (token === null || token === ""){
+            return;
+        }
+        let response = await axios.get(
+            `${this.uri_}/refresh-token`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            }
+        )
+        if (response.status === 200){
+            if (response.data.code !== 200){
+                //如果响应码不是200说明token有错误，无法通过验证，清空一下token
+                localStorage.removeItem("video-web-golang-token");
+            }
+            // console.log("刷新成功");
+            localStorage.setItem("video-web-golang-token", response.data.data.token);
+            return;
+        }
+    }
 }
 
 export {UserManager};
