@@ -3,6 +3,7 @@ import {ref} from "vue";
 import {useRouter} from "vue-router";
 import { NPopover, NButton } from "naive-ui";
 import { UserManager } from "../api/user";
+import { global } from "../api/global";
 
 const navLinks = [
     { text: '首页', href: '/' },
@@ -26,6 +27,11 @@ const router = useRouter();
 
 const search_keyword = ref("");
 
+const avatar_path = ref(`${window.location.protocol}//${window.location.host}/src/assets/imgs/default_user_avatar.png`);
+if (UserManager.isLogin()){
+  avatar_path.value = `${global.path}/user/get-avatar?user_id=` + localStorage.getItem("video-web-golang-uuid");
+}
+
 const refresh_username = ()=>{
   username.value = localStorage.getItem("video-web-golang-username") || "游客";
 }
@@ -43,6 +49,7 @@ const go_user_page = ()=>{
 
 const logout = ()=>{
   localStorage.removeItem("video-web-golang-token");
+  localStorage.removeItem("video-web-golang-uuid");
   localStorage.removeItem("video-web-golang-username");
   refresh_username();
 }
@@ -105,7 +112,7 @@ const goSearch = (keyword: string) =>{
             <!-- 头像部分 -->
             <template #trigger>
               <div class="user-avatar" @click="go_user_page">
-                <img src="../assets/imgs/default_user_avatar.png" alt="User Avatar" />
+                <img :src="avatar_path" alt="User Avatar" />
               </div>
             </template>
           </n-popover>
