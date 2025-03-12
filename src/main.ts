@@ -10,6 +10,7 @@ import VideoView from "./views/VideoView.vue";
 import RegisterAndLogin from './views/RegisterAndLogin.vue';
 import UploadView from './views/UploadView.vue';
 import Profile from './views/Profile.vue';
+import SearchView from "./views/SearchView.vue";
 
 const routes = [
     {
@@ -36,6 +37,11 @@ const routes = [
         name: "Profile",
         path: "/profile/:username",
         component: Profile
+    },
+    {
+        name: "Search",
+        path: "/search/:keyword",
+        component: SearchView,
     }
 ]
 

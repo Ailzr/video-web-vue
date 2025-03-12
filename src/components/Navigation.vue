@@ -46,6 +46,15 @@ const logout = ()=>{
   localStorage.removeItem("video-web-golang-username");
   refresh_username();
 }
+
+const goSearch = (keyword: string) =>{
+  if (keyword === ""){
+    return;
+  }
+  router.push({name: 'Search', params: {keyword: keyword}}).then(()=> {
+    location.reload();
+  });
+}
 </script>
 
 <template>
@@ -61,10 +70,14 @@ const logout = ()=>{
         
         <!-- 搜索框 -->
         <div class="center_search_container">
-            <div class="search_bar">
-              <div class="search_input"><input type="text" id="search_content" v-model="search_keyword"></div>
-              <div class="search_btn"><button @click="router.push({name: 'Search', params: {keyword: search_keyword}})"></button></div>
+          <div class="search_bar">
+            <div class="search_input">
+              <input type="text" id="search_content" v-model="search_keyword" @keyup.enter="goSearch(search_keyword)" />
             </div>
+            <div class="search_btn">
+              <button type="button" @click="goSearch(search_keyword)"></button>
+            </div>
+          </div>
         </div>
 
         <div class="nav-right">
