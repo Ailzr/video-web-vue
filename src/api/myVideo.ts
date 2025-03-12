@@ -81,6 +81,22 @@ class myVideoManager {
         return response.data.data.video_list;
     }
 
+    public async deleteVideo(videoId: string){
+        let token = localStorage.getItem("video-web-golang-token");
+        let response = await axios.delete(
+            `${this.uri_}/delete?video_id=${videoId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            }
+        )
+        if (response.status === 200 && response.data.code === 200){
+            return true;
+        }
+        return false;
+    }
+
 }
 
 export {myVideoManager}

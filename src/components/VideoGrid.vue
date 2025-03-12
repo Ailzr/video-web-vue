@@ -1,44 +1,60 @@
+<template>
+  <div class="video-grid">
+    <NCard 
+      v-for="video in processedVideos" 
+      :key="video.uuid"
+      class="video-card"
+      :hoverable="true"
+      @click="router.push({name: 'Video', params: { video_id: video.uuid }})"
+    >
+      <img :src="video.face" class="video-face" alt="Video Thumbnail"/>
+      
+      <div class="video-details">
+        <h3 class="video-title">{{ video.title }}</h3>
+        <p class="video-description">播放数: {{ video.get_num }} 点赞数: {{ video.like_num }}</p>
+        
+        <!-- 仅在 Profile 页面显示编辑和删除按钮 -->
+        <div v-if="editable" class="actions">
+          <button class="edit-btn" @click.stop="editVideo(video)">编辑</button>
+          <button class="delete-btn" @click.stop="deleteVideo(video)">删除</button>
+        </div>
+      </div>
+    </NCard>
+  </div>
+</template>
+
 <script setup lang="ts">
-import { computed } from "vue";
-import { NCard } from "naive-ui";
+import { computed, defineProps, defineEmits } from "vue";
 import { useRouter } from "vue-router";
-import { myVideo } from "../api/myVideo";
 import { global } from "../api/global.ts";
+import { myVideo } from "../api/myVideo.ts";
+import { NCard } from "naive-ui";
 
 const router = useRouter();
 const path = global.path;
+const emit = defineEmits(["edit", "delete"]);
 
 const props = defineProps<{
   videos: myVideo[];
+  editable?: boolean;
 }>();
+
 const processedVideos = computed(() => {
   return props.videos.map(video => ({
     ...video,
     face: `${path}/video/get-video-face?video_id=${video.uuid}`
   }));
 });
+
+const editVideo = (video: myVideo) => {
+  emit("edit", video);
+};
+
+const deleteVideo = (video: myVideo) => {
+  console.log("click delete button");
+  emit("delete", video);
+};
 </script>
-
-<template>
-    <div class="video-grid">
-        <NCard 
-            v-for="video in processedVideos" 
-            :key="video.uuid" 
-            class="video-card" 
-            :hoverable="true" 
-            :style="{ width: '100%', borderRadius: '15px', overflow: 'hidden', position: 'relative' }"
-            @click="router.push({name: 'Video', params: { video_id: video.uuid}})"
-        >
-            <img :src="video.face" class="video-face" alt="Video Thumbnail"/>
-
-            <div class="video-details">
-            <h3 class="video-title">{{ video.title }}</h3>
-
-            <p class="video-description">播放数:{{ video.get_num }} 点赞数:{{ video.like_num }}</p>
-            </div>
-        </NCard>
-    </div>
-</template>
 
 <style scoped>
 .video-grid {
@@ -82,4 +98,28 @@ const processedVideos = computed(() => {
   font-size: 0.9em;
   margin-bottom: 10px;
 }
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* 按钮之间的间距 */
+}
+
+.edit-btn, .delete-btn {
+  padding: 5px 10px;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+}
+
+.edit-btn {
+  background-color: #f0ad4e;
+  color: white;
+}
+
+.delete-btn {
+  background-color: #d9534f;
+  color: white;
+}
+
 </style>
