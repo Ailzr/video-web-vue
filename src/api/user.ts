@@ -49,6 +49,7 @@ class UserManager{
         }
         if (response.data.code === 200){
             localStorage.setItem("video-web-golang-token", response.data.data.token);
+            localStorage.setItem("video-web-golang-uuid", response.data.data.uuid);
             localStorage.setItem("video-web-golang-username", response.data.data.nickname);
             return true;
         }
