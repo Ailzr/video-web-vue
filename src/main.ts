@@ -11,7 +11,7 @@ import RegisterAndLogin from './views/RegisterAndLogin.vue';
 import UploadView from './views/UploadView.vue';
 import Profile from './views/Profile.vue';
 import SearchView from "./views/SearchView.vue";
-
+import HistoryView from './views/HistoryView.vue';
 const routes = [
     {
         name: "Index",
@@ -37,6 +37,11 @@ const routes = [
         name: "Profile",
         path: "/profile/:username",
         component: Profile
+    },
+    {
+        name: "History",
+        path: "/history",
+        component: HistoryView,
     },
     {
         name: "Search",

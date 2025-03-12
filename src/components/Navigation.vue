@@ -16,7 +16,7 @@ const userActions = [
   { text: '消息', href: '/#' },
   { text: '关注', href: '/#' },
   { text: '收藏', href: '/#' },
-  { text: '历史', href: '/#' },
+  { text: '历史', href: '/history' },
   { text: '上传', href: '/upload' },
 ]
 
