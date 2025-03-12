@@ -51,7 +51,7 @@ const editVideo = (video: myVideo) => {
 };
 
 const deleteVideo = (video: myVideo) => {
-  console.log("click delete button");
+  //console.log("click delete button");
   emit("delete", video);
 };
 </script>
