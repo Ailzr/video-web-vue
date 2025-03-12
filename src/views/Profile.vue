@@ -66,13 +66,12 @@
   
   const handleDelete = async (video: myVideo) => {
     if (confirm(`确定删除视频 "${video.title}" 吗？`)) {
-      try {
-        await my_video_manager.deleteVideo(video.uuid);
-        video_list.value = video_list.value.filter(v => v.uuid !== video.uuid);
-        message.success("视频删除成功");
-      } catch (error) {
-        message.error("删除失败");
-      }
+        let resp = await my_video_manager.deleteVideo(video.uuid);
+        if (resp != ""){
+            message.error(resp);
+            return;
+        }
+        message.success("删除成功");
     }
   };
   

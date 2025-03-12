@@ -81,7 +81,7 @@ class myVideoManager {
         return response.data.data.video_list;
     }
 
-    public async deleteVideo(videoId: string){
+    public async deleteVideo(videoId: string) : Promise<string>{
         let token = localStorage.getItem("video-web-golang-token");
         let response = await axios.delete(
             `${this.uri_}/delete?video_id=${videoId}`,
@@ -91,10 +91,13 @@ class myVideoManager {
                 }
             }
         )
-        if (response.status === 200 && response.data.code === 200){
-            return true;
+        if (response.status !== 200){
+            return "请求异常，删除失败";
         }
-        return false;
+        if (response.data.code !== 200){
+            return response.data.msg;
+        }
+        return "";
     }
 
 }
