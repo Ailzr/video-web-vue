@@ -357,15 +357,15 @@ const handleUpload = async () => {
 .upload-page {
   min-height: 100vh;
   padding: 40px 20px;
-  background-color: #f8f9fa;
-  color: #333;
+  background-color: var(--video-card-bgc);
+  color: var(--text-color);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 .upload-container {
   max-width: 800px;
   margin: 0 auto;
-  background-color: white;
+  background-color: var(--video-card-bgc);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   padding: 32px;
@@ -375,7 +375,7 @@ const handleUpload = async () => {
   font-size: 1.8rem;
   font-weight: 600;
   margin-bottom: 32px;
-  color: #333;
+  color: var(--text-color);
   text-align: center;
 }
 
@@ -383,7 +383,7 @@ const handleUpload = async () => {
   font-size: 1.4rem;
   font-weight: 600;
   margin-bottom: 20px;
-  color: #333;
+  color: var(--text-color);
 }
 
 /* Upload Section */
@@ -395,7 +395,7 @@ const handleUpload = async () => {
 }
 
 .upload-area {
-  border: 2px dashed #ddd;
+  border: 2px dashed var(--border-color);
   border-radius: 12px;
   padding: 24px;
   text-align: center;
@@ -432,11 +432,11 @@ const handleUpload = async () => {
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 8px;
-  color: #333;
+  color: var(--text-color);
 }
 
 .upload-area p {
-  color: #666;
+  color: var(--text-color-secondary);
   margin-bottom: 16px;
 }
 
@@ -479,7 +479,7 @@ const handleUpload = async () => {
   display: flex;
   align-items: center;
   padding: 16px;
-  background-color: #f8f9fa;
+  background-color: var(--video-card-bgc);
   border-radius: 8px;
   width: 100%;
 }
@@ -498,10 +498,11 @@ const handleUpload = async () => {
   font-weight: 600;
   margin-bottom: 4px;
   word-break: break-all;
+  color: var(--text-color);
 }
 
 .video-filesize {
-  color: #666;
+  color: var(--text-color-secondary);
   font-size: 0.9rem;
 }
 
@@ -546,16 +547,18 @@ const handleUpload = async () => {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
-  color: #333;
+  color: var(--text-color);
 }
 
 .form-input, .form-textarea {
   width: 100%;
   padding: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   border-radius: 6px;
   font-size: 1rem;
   transition: border-color 0.2s ease;
+  background-color: var(--input-bgc);
+  color: var(--text-color);
 }
 
 .form-input:focus, .form-textarea:focus {
@@ -577,7 +580,7 @@ const handleUpload = async () => {
 .progress-container {
   width: 100%;
   height: 8px;
-  background-color: #e5e7eb;
+  background-color: var(--border-color);
   border-radius: 4px;
   overflow: hidden;
   margin-bottom: 8px;
@@ -592,7 +595,7 @@ const handleUpload = async () => {
 .progress-details {
   display: flex;
   justify-content: space-between;
-  color: #666;
+  color: var(--text-color-secondary);
   font-size: 0.9rem;
 }
 
@@ -628,12 +631,12 @@ const handleUpload = async () => {
 }
 
 .secondary-button {
-  background-color: #f3f4f6;
-  color: #4b5563;
+  background-color: var(--button-bgc);
+  color: var(--text-color);
 }
 
 .secondary-button:hover {
-  background-color: #e5e7eb;
+  background-color: var(--button-hover-bgc);
 }
 
 /* Status Message */
