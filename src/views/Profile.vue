@@ -62,12 +62,13 @@ import { useRouter } from "vue-router";
 import VideoGrid from "../components/VideoGrid.vue";
 import { UserManager } from "../api/user";
 import { myVideoManager, type myVideo } from "../api/myVideo";
-import { useMessage } from "naive-ui";
+import { useMessage, useDialog } from "naive-ui";
 
 const router = useRouter();
 const user_manager = new UserManager();
 const my_video_manager = new myVideoManager();
 const message = useMessage();
+const dialog = useDialog();
 
 const page = ref(1);
 const video_list = ref<myVideo[]>([]);
@@ -104,22 +105,25 @@ const handleEdit = (video: myVideo) => {
 };
 
 const handleDelete = async (video: myVideo) => {
-  try {
-    // Using Naive UI's dialog would be better, but keeping it simple for now
-    if (confirm(`确定删除视频 "${video.title}" 吗？`)) {
-      let resp = await my_video_manager.deleteVideo(video.uuid);
-      if (resp != "") {
-        message.error(resp);
-        return;
+  dialog.warning({
+    title: '确认删除',
+    content: `确定删除视频 "${video.title}" 吗？`,
+    positiveText: '确定',
+    negativeText: '取消',
+    onPositiveClick: async () => {
+      try {
+        const resp = await my_video_manager.deleteVideo(video.uuid);
+        if (resp !== "") {
+          message.error(resp);
+          return;
+        }
+        video_list.value = video_list.value.filter(v => v.uuid !== video.uuid);
+        message.success("删除成功");
+      } catch (error) {
+        message.error("删除失败：" + (error instanceof Error ? error.message : "未知错误"));
       }
-      
-      // Remove the deleted video from the list
-      video_list.value = video_list.value.filter(v => v.uuid !== video.uuid);
-      message.success("删除成功");
     }
-  } catch (error) {
-    message.error("删除失败，请重试");
-  }
+  });
 };
 
 const navigateToUpload = () => {
