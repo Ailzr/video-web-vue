@@ -13,8 +13,7 @@ class UserManager{
     private uri_: string = `${global.path}/user`;
 
     public static isLogin(){
-        let token = localStorage.getItem("video-web-golang-token");
-        if (token !== null && token !== ""){
+        if (global.token !== null && global.token !== ""){
             return true;
         }
         return false;
@@ -61,12 +60,11 @@ class UserManager{
     }
 
     public async getHistoryList(page: Number){
-        let token = localStorage.getItem("video-web-golang-token");
         let response = await axios.get(
             `${this.uri_}/get-history?page=${page}`,
             {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${global.token}`,
                 }
             }
         )
@@ -77,12 +75,11 @@ class UserManager{
     }
 
     public async getUserVideo(page: Number){
-        let token = localStorage.getItem("video-web-golang-token");
         let response = await axios.get(
             `${this.uri_}/get-user-video?page=${page}`,
             {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${global.token}`,
                 }
             }
         )
@@ -93,15 +90,14 @@ class UserManager{
     }
 
     public async refreshToken(){
-        let token = localStorage.getItem("video-web-golang-token");
-        if (token === null || token === ""){
+        if (global.token === null || global.token === ""){
             return;
         }
         let response = await axios.get(
             `${this.uri_}/refresh-token`,
             {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${global.token}`,
                 }
             }
         )

@@ -25,7 +25,6 @@ class myVideoManager {
     }
 
     public playVideo(videoId: string) {
-        let token = localStorage.getItem("video-web-golang-token");
         axios.put(
             `${this.uri_}/incr-get-num`, 
             {
@@ -33,14 +32,13 @@ class myVideoManager {
             },
             {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${global.token}`,
                 }
             }
         )
     }
 
     public async uploadVideo(face: File, video: File, progressCallback?: (progressEvent: any) => void){
-        let token = localStorage.getItem("video-web-golang-token");
         const formData = new FormData();
         formData.append("face", face);
         formData.append("video", video);
@@ -49,7 +47,7 @@ class myVideoManager {
             formData,
             {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${global.token}`,
                     "Content-Type": "multipart/form-data",
                 },
                 onUploadProgress: progressEvent => {
@@ -82,12 +80,11 @@ class myVideoManager {
     }
 
     public async deleteVideo(videoId: string) : Promise<string>{
-        let token = localStorage.getItem("video-web-golang-token");
         let response = await axios.delete(
             `${this.uri_}/delete?video_id=${videoId}`,
             {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${global.token}`,
                 }
             }
         )
