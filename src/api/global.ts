@@ -10,6 +10,10 @@ class global{
     static get path(): string{
         return this.path_ + "/apis";
     }
+
+    static get token(): string{
+        return localStorage.getItem("video-web-golang-token") || "";
+    }
 }
 
 export {global};
