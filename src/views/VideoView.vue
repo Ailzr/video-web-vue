@@ -2,7 +2,7 @@
 import {useRoute} from "vue-router";
 import {global} from "../api/global.ts";
 import { myVideoManager } from "../api/myVideo.ts";
-
+import Comment from "../components/Comment.vue";
 const path = global.path;
 
 const route = useRoute();
@@ -23,6 +23,9 @@ const my_video_manager = new myVideoManager();
         @play="my_video_manager.playVideo(video_id)"
       ></video>
     </div>
+
+    <!-- 评论区 -->
+    <Comment />
   </template>
   
   
