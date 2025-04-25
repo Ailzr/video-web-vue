@@ -57,14 +57,14 @@ class myVideoManager {
             }
         )
         if (response.status !== 200){
-            return false;
+            return "";
         }
         if (response.data.code === 200){
-            return true;
+            return response.data.data.video_id;
         }else{
             console.log('上传错误:' + response.data.msg);
+            return "";
         }
-        return false;
     }
 
     public async getVideoListByIds(videoIds: object[]) {
@@ -113,6 +113,25 @@ class myVideoManager {
             return null;
         }
         return response.data.data.video;
+    }
+
+    public async editVideo(myVideo: myVideo): Promise<string> {
+        let response = await axios.put(
+            `${this.uri_}/edit`,
+            myVideo,
+            {
+                headers: {
+                    Authorization: `Bearer ${global.token}`,
+                }
+            }
+        )
+        if (response.status !== 200) {
+            return "请求异常，修改失败";
+        }
+        if (response.data.code !== 200) {
+            return response.data.msg;
+        }
+        return "";
     }
 
 }
