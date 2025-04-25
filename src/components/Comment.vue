@@ -59,10 +59,7 @@
   // 获取评论列表
   onMounted(async () => {
       getVideoId();
-      console.log(videoId.value);
-      console.log(commentManager);
       commentList.value = await commentManager.getCommentList(videoId.value);
-      console.log(commentList.value);
   });
   
   const addComment = async () => {
@@ -76,14 +73,16 @@
           user_id: '',
           video_id: videoId.value,
       }
-      console.log(comment);
       let result = await commentManager.addComment(comment);
       if (result) {
         message.success('评论成功');
+        // 清空评论内容
+        commentContent.value = '';
+        // 刷新评论列表
+        commentList.value = await commentManager.getCommentList(videoId.value);
       } else {
         message.error('评论失败');
       }
-      commentList.value = await commentManager.getCommentList(videoId.value);
   };
   
   const deleteComment = async (commentId: string) => {

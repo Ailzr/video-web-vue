@@ -55,8 +55,19 @@ class UserManager{
         return false;
     }
 
-    public async updatePassword(){
-        //TODO 更改密码
+    public async updatePassword(user: User){
+        let response = await axios.post(
+            `${this.uri_}/update-pwd`,
+            {
+                "email": user.email,
+                "code": user.code,
+                "password": user.password
+            }
+        );
+        if (response.status !== 200) {
+            return false;
+        }
+        return response.data.code === 200;
     }
 
     public async getHistoryList(page: Number){
@@ -109,6 +120,74 @@ class UserManager{
             // console.log("刷新成功");
             localStorage.setItem("video-web-golang-token", response.data.data.token);
             return;
+        }
+    }
+
+    public async getAvatar(userId: string): Promise<File | null> {
+        try {
+            const response = await axios.get(`${this.uri_}/get-avatar`, {
+                params: {
+                    user_id: userId
+                }
+            });
+            if (response.status === 200 && response.data.code === 200) {
+                return response.data.avatar;
+            }
+            return null;
+        } catch (error) {
+            console.error('Failed to get avatar:', error);
+            return null;
+        }
+    }
+    
+    public async editUserInfo(nickname: string, description: string): Promise<boolean> {
+        try {
+            const response = await axios.put(`${this.uri_}/edit`, {
+                nickname,
+                description
+            }, {
+                headers: {
+                    Authorization: global.token
+                }
+            });
+            return response.status === 200 && response.data.code === 200;
+        } catch (error) {
+            console.error('Failed to edit user info:', error);
+            return false;
+        }
+    }
+    
+    public async getUserInfo(userId: string): Promise<{nickname: string, description: string} | null> {
+        try {
+            const response = await axios.get(`${this.uri_}/info`, {
+                params: {
+                    user_id: userId
+                }
+            });
+            if (response.status === 200 && response.data.code === 200) {
+                return response.data.data;
+            }
+            return null;
+        } catch (error) {
+            console.error('Failed to get user info:', error);
+            return null;
+        }
+    }
+    
+    public async getUserProfile(): Promise<{email: string, nickname: string, description: string} | null> {
+        try {
+            const response = await axios.get(`${this.uri_}/profile`, {
+                headers: {
+                    Authorization: global.token
+                }
+            });
+            if (response.status === 200 && response.data.code === 200) {
+                return response.data.data;
+            }
+            return null;
+        } catch (error) {
+            console.error('Failed to get user profile:', error);
+            return null;
         }
     }
 }

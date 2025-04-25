@@ -15,6 +15,7 @@ const my_video_manager = new myVideoManager();
 // For demonstration purposes - you would fetch this data from your API
 const videoTitle = ref("视频标题");
 const videoDescription = ref("视频描述内容会显示在这里。这是一段示例文字，实际使用时请替换为真实的视频描述。");
+const videoUpdateTime = ref("2024-01-01 12:00:00");
 const videoViews = ref(1024);
 const videoLikes = ref(42);
 const isLiked = ref(false);
@@ -26,7 +27,7 @@ const toggleLike = () => {
   } else {
     videoLikes.value--;
   }
-  // Here you would call your API to update the like status
+  // TODO 调用API更新点赞状态
 };
 
 // Format view count
@@ -38,12 +39,37 @@ const formatCount = (count: number): string => {
   }
   return count.toString();
 };
+
+onMounted(async () => {
+  const videoDetail = await my_video_manager.getVideoDetail(video_id);
+  if (videoDetail) {
+    videoTitle.value = videoDetail.title;
+    videoViews.value = videoDetail.get_num;
+    videoLikes.value = videoDetail.like_num;
+    videoDescription.value = videoDetail.description;
+    const date = new Date(videoDetail.updated_at);
+    videoUpdateTime.value = date.toLocaleString('zh-CN', {
+      year: 'numeric',
+      month: '2-digit', 
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    });
+  }
+});
 </script>
 
 <template>
   <div class="video-page">
     <!-- Video Player Section -->
     <div class="video-player-section">
+      <h1 class="video-title">{{ videoTitle }}</h1>
+      <!-- TODO 展示更新时间 -->
+      <div class="video-update-time">
+        <span>发布时间：{{ videoUpdateTime }}</span>
+      </div>
       <div class="video-player-container">
         <video 
           controls
@@ -55,12 +81,10 @@ const formatCount = (count: number): string => {
         ></video>
       </div>
 
-      <!-- TODO 将视频标题修改到播放器的上方 -->
+      
       
       <!-- Video Info Section -->
       <div class="video-info">
-        <h1 class="video-title">{{ videoTitle }}</h1>
-        
         <div class="video-stats">
           <div class="views">
             <span class="views-icon">👁️</span>
