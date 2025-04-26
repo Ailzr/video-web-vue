@@ -257,6 +257,7 @@ onMounted(async () => {
   font-weight: 600;
   color: var(--fontNormal);
   margin: 0;
+  margin-top: 20px;
 }
 
 .section-actions {

@@ -440,6 +440,7 @@ onMounted(() => {
 /* Popover Content */
 .user-popover {
   padding: 16px;
+  background-color: var(--box-bgc);
 }
 
 .user-info {
