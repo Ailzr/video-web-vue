@@ -13,20 +13,20 @@ onMounted(() => {
   }
 });
 
-// Toggle between light and dark mode
-const toggleMode = () => {
-  isDarkMode.value = !isDarkMode.value;
+// // Toggle between light and dark mode
+// const toggleMode = () => {
+//   isDarkMode.value = !isDarkMode.value;
   
-  if (isDarkMode.value) {
-    localStorage.setItem("video-web-golang-theme", "true");
-    document.body.classList.add("dark");
-    document.documentElement.classList.add("dark");
-  } else {
-    localStorage.setItem("video-web-golang-theme", "false");
-    document.body.classList.remove("dark");
-    document.documentElement.classList.remove("dark");
-  }
-}
+//   if (isDarkMode.value) {
+//     localStorage.setItem("video-web-golang-theme", "true");
+//     document.body.classList.add("dark");
+//     document.documentElement.classList.add("dark");
+//   } else {
+//     localStorage.setItem("video-web-golang-theme", "false");
+//     document.body.classList.remove("dark");
+//     document.documentElement.classList.remove("dark");
+//   }
+// }
 </script>
 
 <template>

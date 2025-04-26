@@ -66,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { myVideoManager } from "../api/myVideo.ts";
 import { UserManager } from "../api/user.ts";
@@ -81,7 +81,7 @@ const my_video_manager = new myVideoManager();
 const isDarkMode = ref(localStorage.getItem('theme') === 'dark');
 
 // Search functionality
-const searchQuery = ref('');
+// const searchQuery = ref('');
 
 // Video loading state
 const videos = ref<myVideo[]>([]);
@@ -125,40 +125,40 @@ const loadMoreVideos = async () => {
   }
 };
 
-// Handle search
-const handleSearch = () => {
-  if (searchQuery.value.trim()) {
-    router.push({ name: 'Search', params: { keyword: searchQuery.value } });
-  }
-};
+// // Handle search
+// const handleSearch = () => {
+//   if (searchQuery.value.trim()) {
+//     router.push({ name: 'Search', params: { keyword: searchQuery.value } });
+//   }
+// };
 
 // Navigate to category
 const navigateToCategory = (categoryId: string) => {
   router.push({ name: 'Search', params: { keyword: categoryId } });
 };
 
-// Toggle theme
-const toggleTheme = () => {
-  const newTheme = isDarkMode.value ? 'light' : 'dark';
-  isDarkMode.value = !isDarkMode.value;
+// // Toggle theme
+// const toggleTheme = () => {
+//   const newTheme = isDarkMode.value ? 'light' : 'dark';
+//   isDarkMode.value = !isDarkMode.value;
   
-  // 更新 DOM 和 localStorage
-  if (newTheme === 'dark') {
-    document.documentElement.classList.add('dark');
-  } else {
-    document.documentElement.classList.remove('dark');
-  }
-  localStorage.setItem('theme', newTheme);
-};
+//   // 更新 DOM 和 localStorage
+//   if (newTheme === 'dark') {
+//     document.documentElement.classList.add('dark');
+//   } else {
+//     document.documentElement.classList.remove('dark');
+//   }
+//   localStorage.setItem('theme', newTheme);
+// };
 
-// Initialize theme
-const initTheme = () => {
-  if (isDarkMode.value) {
-    document.documentElement.classList.add('dark');
-  } else {
-    document.documentElement.classList.remove('dark');
-  }
-};
+// // Initialize theme
+// const initTheme = () => {
+//   if (isDarkMode.value) {
+//     document.documentElement.classList.add('dark');
+//   } else {
+//     document.documentElement.classList.remove('dark');
+//   }
+// };
 
 // Refresh token and load videos on mount
 onMounted(async () => {

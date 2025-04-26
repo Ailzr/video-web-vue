@@ -155,7 +155,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed, watch, onUpdated } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from "vue-router";
 import { myVideoManager } from '../api/myVideo';
 import { useMessage } from "naive-ui";
