@@ -160,12 +160,12 @@ onMounted(loadVideos);
   font-size: 28px;
   font-weight: 700;
   margin: 0 0 8px 0;
-  color: #1f2937;
+  color: var(--fontNormal);
 }
 
 .subtitle {
   font-size: 16px;
-  color: #6b7280;
+  color: var(--fontNormal);
   margin: 0;
 }
 
