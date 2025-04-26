@@ -8,6 +8,7 @@ type myVideo = {
     get_num: number,
     like_num: number,
     type: string,
+    description: string,
     face?: string,
 }
 
