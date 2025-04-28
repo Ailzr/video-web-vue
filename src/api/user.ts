@@ -169,13 +169,16 @@ class UserManager{
 
     public async uploadAvatar(avatar: File) {
         try {
-            const response = await axios.post(`${this.uri_}/upload-avatar`, {
-                avatar: avatar
-            }, {
-                headers: {
-                    Authorization: global.token
+            const formData = new FormData();
+            formData.append("avatar", avatar);
+            const response = await axios.post(`${this.uri_}/upload-avatar`, 
+                formData, 
+                {
+                    headers: {
+                        Authorization: global.token
+                    }
                 }
-            });
+            );
             return response.status === 200 && response.data.code === 200;
         } catch (error) {
             console.error('Failed to upload avatar:', error);
