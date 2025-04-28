@@ -58,6 +58,7 @@ onMounted(async () => {
       hour12: false
     });
   }
+  my_video_manager.playVideo(video_id);
 });
 </script>
 
@@ -77,7 +78,6 @@ onMounted(async () => {
           class="video-player" 
           autoplay
           muted
-          @play="my_video_manager.playVideo(video_id)"
         ></video>
       </div>
 
