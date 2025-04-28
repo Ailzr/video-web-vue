@@ -209,7 +209,7 @@ onMounted(loadVideos);
   align-items: center;
   justify-content: center;
   padding: 60px 20px;
-  background-color: #f9fafb;
+  background-color: var(--background);
   border-radius: 12px;
   text-align: center;
 }
@@ -223,12 +223,12 @@ onMounted(loadVideos);
   font-size: 20px;
   font-weight: 600;
   margin: 0 0 8px 0;
-  color: #1f2937;
+  color: var(--fontNormal);
 }
 
 .empty-description {
   font-size: 16px;
-  color: #6b7280;
+  color: var(--fontNormal);
   max-width: 400px;
   margin: 0 0 24px 0;
 }
