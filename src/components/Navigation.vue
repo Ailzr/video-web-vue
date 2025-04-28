@@ -79,6 +79,9 @@
                 <button class="popover-button" @click="go_user_page">
                   {{ UserManager.isLogin() ? '个人中心' : '登录/注册' }}
                 </button>
+                <button v-if="UserManager.isLogin()" class="popover-button" @click="edit_user_info">
+                  编辑个人资料
+                </button>
                 <button 
                   v-if="UserManager.isLogin()" 
                   class="popover-button logout-button" 
@@ -162,10 +165,7 @@ const username = ref(localStorage.getItem("video-web-golang-username") || "游�
 const search_keyword = ref("");
 
 const avatar_path = computed(() => {
-  if (UserManager.isLogin()) {
-    return `${global.path}/user/get-avatar?user_id=` + localStorage.getItem("video-web-golang-uuid");
-  }
-  return `${window.location.protocol}//${window.location.host}/src/assets/imgs/default_user_avatar.png`;
+  return `${global.path}/user/get-avatar?user_id=` + localStorage.getItem("video-web-golang-uuid");
 });
 
 const refresh_username = () => {
@@ -179,6 +179,14 @@ const go_user_page = () => {
   }
   refresh_username();
   router.push({ name: 'Profile', params: { username: username.value } });
+};
+
+const edit_user_info = () => {
+  if (!UserManager.isLogin()) {
+    router.push({ name: "RegisterAndLogin" });
+    return;
+  }
+  router.push({ name: 'EditProfile' });
 };
 
 const logout = () => {

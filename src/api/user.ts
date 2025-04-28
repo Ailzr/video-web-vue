@@ -5,7 +5,9 @@ type User = {
     email: string,
     code: string,
     nickname: string,
-    password: string
+    password: string,
+    avatar?: string,
+    description?: string
 }
 
 
@@ -156,16 +158,32 @@ class UserManager{
             return false;
         }
     }
+
+    public async uploadAvatar(avatar: File) {
+        try {
+            const response = await axios.post(`${this.uri_}/upload-avatar`, {
+                avatar: avatar
+            }, {
+                headers: {
+                    Authorization: global.token
+                }
+            });
+            return response.status === 200 && response.data.code === 200;
+        } catch (error) {
+            console.error('Failed to upload avatar:', error);
+            return false;
+        }
+    }
     
-    public async getUserInfo(userId: string): Promise<{nickname: string, description: string} | null> {
+    public async getUserInfo(): Promise<User | null> {
         try {
             const response = await axios.get(`${this.uri_}/info`, {
-                params: {
-                    user_id: userId
+                headers: {
+                    Authorization: global.token
                 }
             });
             if (response.status === 200 && response.data.code === 200) {
-                return response.data.data;
+                return response.data.data.user;
             }
             return null;
         } catch (error) {
@@ -174,22 +192,22 @@ class UserManager{
         }
     }
     
-    public async getUserProfile(): Promise<{email: string, nickname: string, description: string} | null> {
-        try {
-            const response = await axios.get(`${this.uri_}/profile`, {
-                headers: {
-                    Authorization: global.token
-                }
-            });
-            if (response.status === 200 && response.data.code === 200) {
-                return response.data.data;
-            }
-            return null;
-        } catch (error) {
-            console.error('Failed to get user profile:', error);
-            return null;
-        }
-    }
+    // public async getUserProfile(): Promise<{email: string, nickname: string, description: string} | null> {
+    //     try {
+    //         const response = await axios.get(`${this.uri_}/profile`, {
+    //             headers: {
+    //                 Authorization: global.token
+    //             }
+    //         });
+    //         if (response.status === 200 && response.data.code === 200) {
+    //             return response.data.data;
+    //         }
+    //         return null;
+    //     } catch (error) {
+    //         console.error('Failed to get user profile:', error);
+    //         return null;
+    //     }
+    // }
 }
 
 export {UserManager};

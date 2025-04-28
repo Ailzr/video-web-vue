@@ -12,6 +12,7 @@ import UploadView from './views/UploadView.vue';
 import Profile from './views/Profile.vue';
 import SearchView from "./views/SearchView.vue";
 import HistoryView from './views/HistoryView.vue';
+import EditProfile from './views/EditProfile.vue';
 const routes = [
     {
         name: "Index",
@@ -47,6 +48,11 @@ const routes = [
         name: "Search",
         path: "/search/:keyword",
         component: SearchView,
+    },
+    {
+        name: "EditProfile",
+        path: "/edit-profile",
+        component: EditProfile
     }
 ]
 
