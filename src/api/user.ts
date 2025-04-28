@@ -1,5 +1,6 @@
 import axios from "axios";
 import {global} from "./global";
+import DefaultAvatar from "../assets/imgs/default_user_avatar.png";
 
 type User = {
     email: string,
@@ -19,6 +20,13 @@ class UserManager{
             return true;
         }
         return false;
+    }
+
+    static get avatarPath(): string{
+        if (this.isLogin()) {
+            return `${global.path}/user/get-avatar?user_id=` + localStorage.getItem("video-web-golang-uuid");
+        }
+        return DefaultAvatar;
     }
 
     public async getCode(email:string) : Promise<Boolean> {

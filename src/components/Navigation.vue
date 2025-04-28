@@ -68,7 +68,7 @@
           <template #default>
             <div class="user-popover">
               <div class="user-info">
-                <img :src="avatar_path" alt="User Avatar" class="popover-avatar" />
+                <img :src="UserManager.avatarPath" alt="User Avatar" class="popover-avatar" />
                 <div class="user-details">
                   <p class="user-name">{{ username }}</p>
                   <p class="user-status">{{ UserManager.isLogin() ? '已登录' : '未登录' }}</p>
@@ -96,7 +96,7 @@
           <!-- Avatar Trigger -->
           <template #trigger>
             <div class="user-avatar" @click="go_user_page">
-              <img :src="avatar_path" alt="User Avatar" />
+              <img :src="UserManager.avatarPath" alt="User Avatar" />
             </div>
           </template>
         </n-popover>
@@ -132,11 +132,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { NPopover } from "naive-ui";
 import { UserManager } from "../api/user";
-import { global } from "../api/global";
 
 const router = useRouter();
 const route = useRoute();
@@ -163,10 +162,6 @@ const userActions = [
 
 const username = ref(localStorage.getItem("video-web-golang-username") || "游客");
 const search_keyword = ref("");
-
-const avatar_path = computed(() => {
-  return `${global.path}/user/get-avatar?user_id=` + localStorage.getItem("video-web-golang-uuid");
-});
 
 const refresh_username = () => {
   username.value = localStorage.getItem("video-web-golang-username") || "游客";

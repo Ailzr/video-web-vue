@@ -11,7 +11,7 @@
           <div class="avatar-section">
             <div class="avatar-preview" @click="triggerFileInput">
               <img 
-                :src="avatarPreview || defaultAvatarUrl" 
+                :src="avatarPreview || UserManager.avatarPath" 
                 alt="用户头像" 
                 class="avatar-image"
               />
@@ -86,10 +86,9 @@
   </template>
   
   <script setup lang="ts">
-  import { ref, onMounted, computed } from 'vue';
+  import { ref, onMounted } from 'vue';
   import { UserManager } from '../api/user';
   import { useRouter } from 'vue-router';
-  import { global } from '../api/global';
   
   const router = useRouter();
   const user_manager = new UserManager();
@@ -110,15 +109,6 @@
   const statusMessage = ref({
     success: '',
     error: ''
-  });
-  
-  // Computed properties
-  const defaultAvatarUrl = computed(() => {
-    if (UserManager.isLogin()) {
-      const userId = localStorage.getItem("video-web-golang-uuid");
-      return `${global.path}/user/get-avatar?user_id=${userId}&t=${Date.now()}`;
-    }
-    return `${window.location.protocol}//${window.location.host}/src/assets/imgs/default_user_avatar.png`;
   });
   
   // Trigger file input click
@@ -207,7 +197,7 @@
         formData.append('avatar', avatar.value);
         
         // Create a new instance of FormData and append the avatar file
-        avatarUpdated = await uploadAvatarWithFormData(avatar.value);
+        avatarUpdated = await user_manager.uploadAvatar(avatar.value);
       }
       
       // Show success or error message
@@ -227,28 +217,6 @@
       statusMessage.value.error = '发生错误，请稍后重试';
     } finally {
       isSubmitting.value = false;
-    }
-  };
-  
-  // Helper function to upload avatar with FormData
-  const uploadAvatarWithFormData = async (file: File) => {
-    try {
-      const formData = new FormData();
-      formData.append('avatar', file);
-      
-      const response = await fetch(`${user_manager.uri_}/upload-avatar`, {
-        method: 'POST',
-        headers: {
-          'Authorization': global.token
-        },
-        body: formData
-      });
-      
-      const data = await response.json();
-      return response.status === 200 && data.code === 200;
-    } catch (error) {
-      console.error('Failed to upload avatar:', error);
-      return false;
     }
   };
   
