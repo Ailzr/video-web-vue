@@ -6,12 +6,12 @@
       <div class="comment-list" v-if="commentList.length > 0">
         <div class="comment-item" v-for="comment in commentList" :key="comment.uuid">
           <div class="comment-avatar">
-            <div class="avatar-circle"><img :src="`${global.path}/user/get-avatar?user_id=${comment.user.uuid}`" alt="" style="width: 100%; height: 100%; border-radius: 50%;"></div>
+            <div class="avatar-circle"><img :src="`${global.path}/user/get-avatar?user_id=${comment.user?.uuid}`" alt="" style="width: 100%; height: 100%; border-radius: 50%;"></div>
           </div>
           <div class="comment-body">
-            <div class="comment-user">{{ comment.user.nickname }}</div>
+            <div class="comment-user">{{ comment.user?.nickname }}</div>
             <div class="comment-time">评论时间：
-              {{ formatCommentTime(comment.updated_at) }}
+              {{ formatCommentTime(comment.updated_at || '') }}
             </div>
             <div class="comment-content">{{ comment.content }}</div>
             <div class="comment-actions">
@@ -94,7 +94,6 @@
       let comment: Comment = {
           uuid: '',
           content: commentContent.value,
-          user_id: '',
           video_id: videoId.value,
       }
       let result = await commentManager.addComment(comment);

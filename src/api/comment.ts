@@ -15,8 +15,8 @@ type Comment = {
     uuid: string,
     content: string,
     video_id: string,
-    updated_at: string,
-    user: User,
+    updated_at?: string,
+    user?: User,
 }
 
 class CommentManager {

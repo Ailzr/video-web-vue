@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { NForm, NFormItem, NInput, NButton, useMessage, NCard, NDivider, NTabs, NTabPane } from "naive-ui";
+import { ref } from 'vue';
+import { NForm, NFormItem, NInput, NButton, useMessage, NCard, NTabs, NTabPane } from "naive-ui";
 import { useRouter } from "vue-router";
 import { UserManager } from "../api/user";
 
@@ -35,7 +35,7 @@ const user_manager = new UserManager();
 const router = useRouter();
 
 // Get verification code for registration or password reset
-const getCode = async (email: string, mode: string) => {
+const getCode = async (email: string) => {
   if (!email) {
     message.warning("请先输入邮箱");
     return;
@@ -346,7 +346,7 @@ const handleResetPassword = async () => {
                     class="get-code-button"
                     :loading="codeLoading"
                     :disabled="codeLoading || !registerData.email"
-                    @click="getCode(registerData.email, 'register')"
+                    @click="getCode(registerData.email)"
                     type="primary"
                     :round="true"
                   >
@@ -416,7 +416,7 @@ const handleResetPassword = async () => {
                     class="get-code-button"
                     :loading="codeLoading"
                     :disabled="codeLoading || !resetPasswordData.email"
-                    @click="getCode(resetPasswordData.email, 'reset')"
+                    @click="getCode(resetPasswordData.email)"
                     type="primary"
                     :round="true"
                   >
