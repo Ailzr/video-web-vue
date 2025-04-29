@@ -2,7 +2,12 @@
 import { NMessageProvider, NDialogProvider } from 'naive-ui';
 import Navigation from './components/Navigation.vue';
 import Footer from "./components/Footer.vue";
-import { onMounted } from 'vue';  // 添加这行
+import { onMounted, ref, watchEffect } from 'vue';
+import { useRoute } from 'vue-router';
+import { global } from './api/global';
+// WebSocket 连接
+const socket = ref<WebSocket | null>(null);
+const newMessageCount = ref(3);
 
 function initializeTheme() {
   const savedTheme = localStorage.getItem('theme');
@@ -17,15 +22,42 @@ function initializeTheme() {
   }
 }
 
-// 添加这个
+// 初始化 WebSocket 连接
+function initWebSocket() {
+  socket.value = new WebSocket(global.ws_path);
+
+  socket.value.onopen = () => {
+    console.log('WebSocket 连接已建立');
+  };
+
+  socket.value.onmessage = (event) => {
+    newMessageCount.value++;
+    // 可以在这里触发自定义事件，以便在各个组件中监听
+    window.dispatchEvent(new CustomEvent('new-message', { detail: event.data }));
+  };
+
+  socket.value.onclose = () => {
+    console.log('WebSocket 连接已关闭');
+  };
+}
+
 onMounted(() => {
   initializeTheme();
+  initWebSocket();
+});
+
+const route = useRoute();
+watchEffect(() => {
+  // 当路由切换时，重置新消息计数
+  if (route.path === '/chat') {
+    newMessageCount.value = 0;
+  }
 });
 </script>
 
 <template>
   <div id="app">
-    <Navigation/>
+    <Navigation :newMessageCount="newMessageCount" />
     <Suspense>
       <n-message-provider>
         <n-dialog-provider>
@@ -41,4 +73,4 @@ onMounted(() => {
 #app {
   font-family: Arial, sans-serif;
 }
-</style>
+</style>    

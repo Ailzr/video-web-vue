@@ -42,10 +42,17 @@
           <li v-for="(action, index) in userActions" :key="index">
             <a 
               :href="action.href" 
-              :class="{ 'active': isActiveLink(action.href) }"
+              :class="{ 
+                'active': isActiveLink(action.href),
+                'message-link': action.text === '消息'
+              }"
             >
               <span class="action-icon">{{ getActionIcon(action.text) }}</span>
               <span class="action-text">{{ action.text }}</span>
+              <span 
+                v-if="action.text === '消息' && props.newMessageCount > 0" 
+                class="red-dot"
+              >{{ props.newMessageCount > 9 ? '9+' : props.newMessageCount }}</span>
             </a>
           </li>
           
@@ -120,10 +127,17 @@
         <li v-for="(action, index) in userActions" :key="index">
           <a 
             :href="action.href" 
-            :class="{ 'active': isActiveLink(action.href) }"
+            :class="{ 
+              'active': isActiveLink(action.href),
+              'message-link': action.text === '消息'
+            }"
           >
             <span class="action-icon">{{ getActionIcon(action.text) }}</span>
             {{ action.text }}
+            <span 
+              v-if="action.text === '消息' && props.newMessageCount > 0" 
+              class="mobile-red-dot"
+            >{{ props.newMessageCount > 9 ? '9+' : props.newMessageCount }}</span>
           </a>
         </li>
       </ul>
@@ -140,6 +154,10 @@ import { UserManager } from "../api/user";
 const router = useRouter();
 const route = useRoute();
 
+const props = defineProps<{
+  newMessageCount: number;
+}>();
+
 // Theme state
 const isDarkMode = ref(localStorage.getItem('theme') === 'dark');
 
@@ -154,7 +172,7 @@ const navLinks = [
 ];
 
 const userActions = [
-  { text: '消息', href: '/messages' },
+  { text: '消息', href: '/message' },
   { text: '收藏', href: '/favorites' },
   { text: '历史', href: '/history' },
   { text: '上传', href: '/upload' },
@@ -388,6 +406,7 @@ onMounted(() => {
   padding: 8px;
   border-radius: 8px;
   transition: background-color 0.2s;
+  position: relative; /* Added for red dot positioning */
 }
 
 .user-actions a:hover {
@@ -400,6 +419,44 @@ onMounted(() => {
 
 .action-icon {
   font-size: 16px;
+}
+
+/* Message Link with Red Dot */
+.message-link {
+  position: relative;
+}
+
+.red-dot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  min-width: 16px;
+  height: 16px;
+  background-color: #ff4d4f;
+  border-radius: 8px;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  box-shadow: 0 0 0 2px var(--box-bgc);
+}
+
+.mobile-red-dot {
+  display: inline-flex;
+  margin-left: 6px;
+  min-width: 16px;
+  height: 16px;
+  background-color: #ff4d4f;
+  border-radius: 8px;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
 }
 
 /* Theme Toggle */
@@ -541,6 +598,7 @@ onMounted(() => {
   font-size: 16px;
   display: block;
   padding: 8px 0;
+  position: relative; /* Added for mobile red dot */
 }
 
 .mobile-nav-links a.active,

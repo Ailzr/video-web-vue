@@ -13,6 +13,7 @@ import Profile from './views/Profile.vue';
 import SearchView from "./views/SearchView.vue";
 import HistoryView from './views/HistoryView.vue';
 import EditProfile from './views/EditProfile.vue';
+import MessageView from './views/MessageView.vue';
 const routes = [
     {
         name: "Index",
@@ -53,6 +54,11 @@ const routes = [
         name: "EditProfile",
         path: "/edit-profile",
         component: EditProfile
+    },
+    {
+        name: "Message",
+        path: "/message",
+        component: MessageView
     }
 ]
 

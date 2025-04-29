@@ -1,9 +1,7 @@
-.navigation {
+/* .navigation {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* background-color: #0D0E11; */
-    /* color: #fff; */
     padding: 10px 20px;
 }
 
@@ -30,7 +28,7 @@
 }
 
 .nav-ul li a {
-    color: inherit; /* 让它继承 body 的颜色 */
+    color: inherit;
     text-decoration: none;
     transition: color 0.3s;
 }
@@ -44,7 +42,6 @@
     align-items: center;
 }
 
-/* 搜索栏 */
 .center_search_container {
     display: flex;
     justify-content: center;
@@ -133,10 +130,8 @@
 }
 
 .popover-content {
-    /* background-color: #2C2C2C; */
     background-color: var(--content-bgc);
     padding: 10px;
-    /* color: #fff; */
     color: var(--fontNormal);
     font-size: 16px;
-}
+} */
