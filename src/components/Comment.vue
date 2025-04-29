@@ -6,10 +6,13 @@
       <div class="comment-list" v-if="commentList.length > 0">
         <div class="comment-item" v-for="comment in commentList" :key="comment.uuid">
           <div class="comment-avatar">
-            <div class="avatar-circle">{{ comment.user_id.charAt(0) }}</div>
+            <div class="avatar-circle"><img :src="`${global.path}/user/get-avatar?user_id=${comment.user.uuid}`" alt="" style="width: 100%; height: 100%; border-radius: 50%;"></div>
           </div>
           <div class="comment-body">
-            <div class="comment-user">{{ comment.user_id }}</div>
+            <div class="comment-user">{{ comment.user.nickname }}</div>
+            <div class="comment-time">评论时间：
+              {{ formatCommentTime(comment.updated_at) }}
+            </div>
             <div class="comment-content">{{ comment.content }}</div>
             <div class="comment-actions">
               <button class="action-button" @click="deleteComment(comment.uuid)">删除</button>
@@ -46,10 +49,31 @@
   import commentManager, { Comment } from '../api/comment';
   import { ref, onMounted } from 'vue';
   import { useMessage } from 'naive-ui';
+  import { global } from '../api/global';
+
   const message = useMessage();
   const commentList = ref<Comment[]>([]);
   const commentContent = ref<string>('');
   const videoId = ref<string>('');
+
+  // 时间格式化函数
+  const formatCommentTime = (timeStr: string) => {
+    const date = new Date(timeStr);
+    if (isNaN(date.getTime())) {
+      console.error('Invalid time value:', timeStr);
+      return '无效时间';
+    }
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    };
+    return new Intl.DateTimeFormat('zh-CN', options).format(date);
+  };
   
   // 获取视频id
   const getVideoId = () => {

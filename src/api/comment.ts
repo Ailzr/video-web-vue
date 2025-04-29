@@ -9,12 +9,14 @@
 // }
 import axios from "axios";
 import {global} from "./global.ts";
+import type {User} from "./user.ts";
 
 type Comment = {
     uuid: string,
     content: string,
-    user_id: string,
     video_id: string,
+    updated_at: string,
+    user: User,
 }
 
 class CommentManager {

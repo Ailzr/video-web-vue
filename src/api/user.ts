@@ -3,6 +3,7 @@ import {global} from "./global";
 import DefaultAvatar from "../assets/imgs/default_user_avatar.png";
 
 type User = {
+    uuid?: string,
     email: string,
     code: string,
     nickname: string,
@@ -221,4 +222,4 @@ class UserManager{
     // }
 }
 
-export {UserManager};
+export {UserManager, type User};
