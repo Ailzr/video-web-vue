@@ -7,7 +7,7 @@ import { useRoute } from 'vue-router';
 import { global } from './api/global';
 // WebSocket 连接
 const socket = ref<WebSocket | null>(null);
-const newMessageCount = ref(3);
+const newMessageCount = ref(0);
 
 function initializeTheme() {
   const savedTheme = localStorage.getItem('theme');
@@ -49,7 +49,7 @@ onMounted(() => {
 const route = useRoute();
 watchEffect(() => {
   // 当路由切换时，重置新消息计数
-  if (route.path === '/chat') {
+  if (route.path === '/message') {
     newMessageCount.value = 0;
   }
 });
