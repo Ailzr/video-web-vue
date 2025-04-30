@@ -4,6 +4,7 @@ import { global } from "../api/global.ts";
 import { myVideoManager } from "../api/myVideo.ts";
 import Comment from "../components/Comment.vue";
 import { ref, onMounted } from "vue";
+import like_manager from "../api/Like.ts";
 
 const path = global.path;
 const route = useRoute();
@@ -28,6 +29,7 @@ const toggleLike = () => {
     videoLikes.value--;
   }
   // TODO 调用API更新点赞状态
+  like_manager.updateLike(video_id);
 };
 
 // Format view count
@@ -57,7 +59,10 @@ onMounted(async () => {
       second: '2-digit',
       hour12: false
     });
+    isLiked.value = videoDetail.is_like;
   }
+  console.log(videoDetail);
+  console.log(isLiked.value);
   my_video_manager.playVideo(video_id);
 });
 </script>

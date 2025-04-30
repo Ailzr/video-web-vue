@@ -10,6 +10,7 @@ type myVideo = {
     type: string,
     description: string,
     face?: string,
+    is_like?: boolean,
 }
 
 class myVideoManager {
@@ -134,7 +135,6 @@ class myVideoManager {
         }
         return "";
     }
-
 }
 
 export {myVideoManager}
