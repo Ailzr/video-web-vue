@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
 import { global } from "../api/global.ts";
-import { myVideoManager } from "../api/myVideo.ts";
+import my_video_manager from "../api/myVideo.ts";
 import Comment from "../components/Comment.vue";
 import { ref, onMounted } from "vue";
 import like_manager from "../api/Like.ts";
@@ -10,8 +10,6 @@ const path = global.path;
 const route = useRoute();
 const video_id = route.params.video_id as string; 
 const video_url = path + "/video/get-video?video_id=" + video_id;
-
-const my_video_manager = new myVideoManager();
 
 // For demonstration purposes - you would fetch this data from your API
 const videoTitle = ref("视频标题");
@@ -61,8 +59,6 @@ onMounted(async () => {
     });
     isLiked.value = videoDetail.is_like;
   }
-  console.log(videoDetail);
-  console.log(isLiked.value);
   my_video_manager.playVideo(video_id);
 });
 </script>

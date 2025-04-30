@@ -2,18 +2,17 @@
 import { useRoute } from "vue-router";
 import { searchManager } from "../api/search";
 import VideoGrid from "../components/VideoGrid.vue";
-import { myVideoManager } from "../api/myVideo";
+import my_video_manager from "../api/myVideo";
 
 const route = useRoute();
 const keyword = route.params.keyword as string; 
 
 const search_manager = new searchManager();
-const video_manager = new myVideoManager();
 
 const videoIds = await search_manager.search(keyword, 1);
 let videos = null;
 if (videoIds !== null){
-    videos = await video_manager.getVideoListByIds(videoIds);
+    videos = await my_video_manager.getVideoListByIds(videoIds);
 }
 </script>
 

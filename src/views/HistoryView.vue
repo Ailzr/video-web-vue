@@ -96,12 +96,11 @@
   import { ref, computed, onMounted } from "vue";
   import { useRouter } from 'vue-router';
   import VideoGrid from '../components/VideoGrid.vue';
-  import { myVideoManager, myVideo } from '../api/myVideo';
+  import my_video_manager, { myVideo } from '../api/myVideo';
   import { useMessage } from 'naive-ui';
   // State
   const router = useRouter();
   const user_manager = new UserManager();
-  const my_video_manager = new myVideoManager();
   const page = ref(1);
   const totalPages = ref(1);
   const loading = ref(true);

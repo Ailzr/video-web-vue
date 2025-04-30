@@ -137,5 +137,5 @@ class myVideoManager {
     }
 }
 
-export {myVideoManager}
+export default new myVideoManager();
 export type {myVideo}

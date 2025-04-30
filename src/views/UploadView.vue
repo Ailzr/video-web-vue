@@ -157,7 +157,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from "vue-router";
-import { myVideoManager } from '../api/myVideo';
+import my_video_manager from '../api/myVideo';
 import { useMessage } from "naive-ui";
 import { UserManager } from '../api/user';
 
@@ -197,7 +197,6 @@ onMounted(async () => {
   videoId.value = route.query.video_id as string;
   if (videoId.value) {
     editMode.value = true;
-    const my_video_manager = new myVideoManager();
     currentVideo.value = await my_video_manager.getVideoDetail(videoId.value);
     if (currentVideo.value) {
       videoTitle.value = currentVideo.value.title || '';
@@ -214,7 +213,6 @@ onMounted(async () => {
 
 // Handle edit submission
 const handleEdit = async () => {
-  const my_video_manager = new myVideoManager();
   const updatedVideo = {
     uuid: videoId.value,
     title: videoTitle.value,
@@ -326,7 +324,6 @@ const handleUpload = async () => {
     uploadSpeed.value = 0;
     const startTime = Date.now();
 
-    const my_video_manager = new myVideoManager();
     const result = await my_video_manager.uploadVideo(faceFile.value, videoFile.value, (progressEvent: any) => {
       const percentCompleted = Math.round((progressEvent.loaded * 100) / (progressEvent.total ?? progressEvent.loaded));
       const elapsedTime = (Date.now() - startTime) / 1000;

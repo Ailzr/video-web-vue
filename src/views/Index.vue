@@ -68,14 +68,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { myVideoManager } from "../api/myVideo.ts";
+import my_video_manager, { myVideo } from "../api/myVideo.ts";
 import { UserManager } from "../api/user.ts";
-import type { myVideo } from "../api/myVideo.ts";
 import VideoGrid from "../components/VideoGrid.vue";
 
 const router = useRouter();
 const user_manager = new UserManager();
-const my_video_manager = new myVideoManager();
 
 // Theme state
 const isDarkMode = ref(localStorage.getItem('theme') === 'dark');

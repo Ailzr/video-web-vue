@@ -61,12 +61,11 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import VideoGrid from "../components/VideoGrid.vue";
 import { UserManager } from "../api/user";
-import { myVideoManager, type myVideo } from "../api/myVideo";
+import my_video_manager, { myVideo } from "../api/myVideo";
 import { useMessage, useDialog } from "naive-ui";
 
 const router = useRouter();
 const user_manager = new UserManager();
-const my_video_manager = new myVideoManager();
 const message = useMessage();
 const dialog = useDialog();
 
