@@ -11,6 +11,7 @@ type myVideo = {
     description: string,
     face?: string,
     is_like?: boolean,
+    is_favorite?: boolean,
 }
 
 class myVideoManager {

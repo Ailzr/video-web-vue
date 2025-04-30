@@ -5,7 +5,10 @@ import my_video_manager from "../api/myVideo.ts";
 import Comment from "../components/Comment.vue";
 import { ref, onMounted } from "vue";
 import like_manager from "../api/Like.ts";
+import favorite_manager from "../api/favorite";
+import { useMessage } from "naive-ui";
 
+const message = useMessage();
 const path = global.path;
 const route = useRoute();
 const video_id = route.params.video_id as string; 
@@ -18,6 +21,7 @@ const videoUpdateTime = ref("2024-01-01 12:00:00");
 const videoViews = ref(1024);
 const videoLikes = ref(42);
 const isLiked = ref(false);
+const isFavorite = ref(false);
 
 const toggleLike = () => {
   isLiked.value = !isLiked.value;
@@ -30,6 +34,20 @@ const toggleLike = () => {
   like_manager.updateLike(video_id);
 };
 
+const toggleFavorite = async () => {
+  try {
+    await favorite_manager.updateFavorite(video_id);
+    if (!isFavorite.value) {
+      isFavorite.value = true;
+      message.success("收藏成功");
+    } else {
+      isFavorite.value = false;
+      message.success("取消收藏成功");
+    }
+  } catch (error) {
+    message.error("发生错误");
+  }
+};
 // Format view count
 const formatCount = (count: number): string => {
   if (count >= 1000000) {
@@ -58,6 +76,7 @@ onMounted(async () => {
       hour12: false
     });
     isLiked.value = videoDetail.is_like;
+    isFavorite.value = videoDetail.is_favorite;
   }
   my_video_manager.playVideo(video_id);
 });
@@ -107,8 +126,12 @@ onMounted(async () => {
               分享
             </button>
             
-            <button class="action-button save-button">
-              <span class="save-icon">🔖</span>
+            <button 
+              class="action-button favorite-button"
+              :class="{ 'favorite': isFavorite }"
+              @click="toggleFavorite"
+            >
+              <span class="favorite-icon">🔖</span>
               收藏
             </button>
           </div>
@@ -223,6 +246,11 @@ onMounted(async () => {
 }
 
 .like-button.liked {
+  background-color: rgba(229, 57, 53, 0.1);
+  color: #e53935;
+}
+
+.favorite-button.favorite {
   background-color: rgba(229, 57, 53, 0.1);
   color: #e53935;
 }
