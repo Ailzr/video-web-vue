@@ -14,6 +14,8 @@ import SearchView from "./views/SearchView.vue";
 import HistoryView from './views/HistoryView.vue';
 import EditProfile from './views/EditProfile.vue';
 import MessageView from './views/MessageView.vue';
+import FavoriteView from './views/FavoriteView.vue';
+
 const routes = [
     {
         name: "Index",
@@ -59,6 +61,11 @@ const routes = [
         name: "Message",
         path: "/message",
         component: MessageView
+    },
+    {
+        name: "Favorite",
+        path: "/favorites",
+        component: FavoriteView
     }
 ]
 
