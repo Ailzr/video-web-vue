@@ -49,7 +49,7 @@
   import commentManager, { Comment } from '../api/comment';
   import { ref, onMounted } from 'vue';
   import { useMessage } from 'naive-ui';
-  import { getAvatarPath } from '../api/user';
+  import { getAvatarPath, UserManager } from '../api/user';
 
   const message = useMessage();
   const commentList = ref<Comment[]>([]);
@@ -87,9 +87,12 @@
   });
   
   const addComment = async () => {
-      console.log(commentContent.value);
       if (commentContent.value === '') {
           return;
+      }
+      if (!UserManager.isLogin()) {
+        message.error("请先登录");
+        return;
       }
       let comment: Comment = {
           uuid: '',
