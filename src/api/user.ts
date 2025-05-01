@@ -11,6 +11,7 @@ type User = {
     avatar?: string,
     description?: string,
     is_followed?: boolean,
+    fans_num?: number,
 }
 
 
@@ -22,6 +23,10 @@ class UserManager{
             return true;
         }
         return false;
+    }
+
+    static get getUserId(): string{
+        return localStorage.getItem("video-web-golang-uuid") || "";
     }
 
     static get avatarPath(): string{
