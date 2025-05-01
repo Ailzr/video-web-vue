@@ -25,7 +25,7 @@ class UserManager{
 
     static get avatarPath(): string{
         if (this.isLogin()) {
-            return `${global.path}/user/get-avatar?user_id=` + localStorage.getItem("video-web-golang-uuid");
+            return `${global.path}/user/userAvatar/` + localStorage.getItem("video-web-golang-uuid") + ".jpg";
         }
         return DefaultAvatar;
     }
@@ -134,13 +134,9 @@ class UserManager{
         }
     }
 
-    public async getAvatar(userId: string): Promise<File | null> {
+    public async getAvatar(avatar: string): Promise<File | null> {
         try {
-            const response = await axios.get(`${this.uri_}/get-avatar`, {
-                params: {
-                    user_id: userId
-                }
-            });
+            const response = await axios.get(`${this.uri_}/${avatar}`);
             if (response.status === 200 && response.data.code === 200) {
                 return response.data.avatar;
             }
@@ -222,4 +218,8 @@ class UserManager{
     // }
 }
 
-export {UserManager, type User};
+function getAvatarPath(avatar: string): string{
+    return `${global.path}/user/${avatar}`;
+}
+
+export {UserManager, type User, getAvatarPath};

@@ -6,7 +6,7 @@
       <div class="comment-list" v-if="commentList.length > 0">
         <div class="comment-item" v-for="comment in commentList" :key="comment.uuid">
           <div class="comment-avatar">
-            <div class="avatar-circle"><img :src="`${global.path}/user/get-avatar?user_id=${comment.user?.uuid}`" alt="" style="width: 100%; height: 100%; border-radius: 50%;"></div>
+            <div class="avatar-circle"><img :src="getAvatarPath(comment.user?.avatar || '')" alt="" style="width: 100%; height: 100%; border-radius: 50%;"></div>
           </div>
           <div class="comment-body">
             <div class="comment-user">{{ comment.user?.nickname }}</div>
@@ -49,7 +49,7 @@
   import commentManager, { Comment } from '../api/comment';
   import { ref, onMounted } from 'vue';
   import { useMessage } from 'naive-ui';
-  import { global } from '../api/global';
+  import { getAvatarPath } from '../api/user';
 
   const message = useMessage();
   const commentList = ref<Comment[]>([]);
