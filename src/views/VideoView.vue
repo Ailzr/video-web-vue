@@ -110,7 +110,9 @@ onMounted(async () => {
     author.value = videoDetail.author;
     isFollowed.value = videoDetail.author?.is_followed || false;
   }
-  my_video_manager.playVideo(video_id);
+  if (UserManager.isLogin()) {
+    my_video_manager.playVideo(video_id);
+  }
 });
 </script>
 
