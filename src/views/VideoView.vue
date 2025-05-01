@@ -7,6 +7,8 @@ import { ref, onMounted } from "vue";
 import like_manager from "../api/Like.ts";
 import favorite_manager from "../api/favorite";
 import { useMessage } from "naive-ui";
+import { User, getAvatarPath, UserManager } from "../api/user.ts";
+import follow_manager from "../api/follow";
 
 const message = useMessage();
 const path = global.path;
@@ -22,19 +24,29 @@ const videoViews = ref(1024);
 const videoLikes = ref(42);
 const isLiked = ref(false);
 const isFavorite = ref(false);
+const isFollowed = ref(false);
+const author = ref<User | null>(null);
 
 const toggleLike = () => {
+  if (!UserManager.isLogin()) {
+    message.error("请先登录");
+    return;
+  }
+  // TODO 调用API更新点赞状态
+  like_manager.updateLike(video_id);
   isLiked.value = !isLiked.value;
   if (isLiked.value) {
     videoLikes.value++;
   } else {
     videoLikes.value--;
   }
-  // TODO 调用API更新点赞状态
-  like_manager.updateLike(video_id);
 };
 
 const toggleFavorite = async () => {
+  if (!UserManager.isLogin()) {
+    message.error("请先登录");
+    return;
+  }
   try {
     await favorite_manager.updateFavorite(video_id);
     if (!isFavorite.value) {
@@ -48,6 +60,24 @@ const toggleFavorite = async () => {
     message.error("发生错误");
   }
 };
+
+const toggleFollow = async () => {
+  if (!UserManager.isLogin()) {
+    message.error("请先登录");
+    return;
+  }
+  const result = await follow_manager.updateFollow(author.value?.uuid || '');
+  if (result && isFollowed.value) {
+    isFollowed.value = false;
+    message.success("取消关注成功");
+  } else if (result && !isFollowed.value) {
+    isFollowed.value = true;
+    message.success("关注成功");
+  } else {
+    message.error("操作失败");
+  }
+}
+
 // Format view count
 const formatCount = (count: number): string => {
   if (count >= 1000000) {
@@ -77,6 +107,8 @@ onMounted(async () => {
     });
     isLiked.value = videoDetail.is_like;
     isFavorite.value = videoDetail.is_favorite;
+    author.value = videoDetail.author;
+    isFollowed.value = videoDetail.author?.is_followed || false;
   }
   my_video_manager.playVideo(video_id);
 });
@@ -101,8 +133,6 @@ onMounted(async () => {
         ></video>
       </div>
 
-      
-      
       <!-- Video Info Section -->
       <div class="video-info">
         <div class="video-stats">
@@ -139,6 +169,18 @@ onMounted(async () => {
         
         <div class="video-description">
           <p>{{ videoDescription }}</p>
+        </div>
+
+        <div class="video-author">
+          <div class="video-author-avatar">
+            <img :src="getAvatarPath(author?.avatar || '')" alt="作者头像">
+          </div>
+          <div class="video-author-name">
+            {{ author?.nickname }}
+          </div>
+          <button class="video-author-button" @click="toggleFollow">
+            {{ isFollowed ? "取消关注" : "关注" }}
+          </button>
         </div>
       </div>
     </div>

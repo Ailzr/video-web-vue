@@ -1,5 +1,6 @@
 import axios from "axios";
 import {global} from "./global.ts";
+import { User } from "./user.ts";
 
 type myVideo = {
     uuid: string,
@@ -12,6 +13,7 @@ type myVideo = {
     face?: string,
     is_like?: boolean,
     is_favorite?: boolean,
+    author?: User,
 }
 
 class myVideoManager {

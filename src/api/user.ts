@@ -9,7 +9,8 @@ type User = {
     nickname: string,
     password: string,
     avatar?: string,
-    description?: string
+    description?: string,
+    is_followed?: boolean,
 }
 
 
