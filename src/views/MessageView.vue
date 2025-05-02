@@ -13,7 +13,7 @@ import {
   Contact
 } from '../api/message';
 import { useMessage } from 'naive-ui';
-
+import { useRouter } from 'vue-router';
 // 状态
 const newMessage = ref('');
 const selectedContact = ref<Contact | null>(null);
@@ -24,6 +24,7 @@ const followLoading = ref(true);
 const searchQuery = ref('');
 const message = useMessage();
 const user_manager = new UserManager();
+const router = useRouter();
 
 // 获取关注列表
 async function getFollowList() {
@@ -201,6 +202,10 @@ const filteredContacts = computed(() => {
 
 // 组件生命周期
 onMounted(() => {
+  if (!UserManager.isLogin()) {
+    router.push('/login');
+    return;
+  }
   window.addEventListener('websocket-message', handleIncomingMessage);
   // 加载联系人列表
   contacts.value = getContacts();
