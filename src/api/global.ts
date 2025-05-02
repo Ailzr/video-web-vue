@@ -5,11 +5,18 @@ type returnInfo<T> = {
 }
 
 class global{
-    private static path_: string = `${window.location.protocol}//${window.location.hostname}:8080`;
-    private static ws_path_: string = `${window.location.protocol}//${window.location.hostname}:8080/ws`;
+    private static get apiBase(): string {
+        return import.meta.env.VITE_API_HOST || 
+            `${window.location.protocol}//${window.location.hostname}:80`;
+    }
+
+    private static get wsBase(): string {
+        return import.meta.env.VITE_WS_HOST || 
+            `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.hostname}:80`;
+    }
 
     static get path(): string{
-        return this.path_ + "/apis";
+        return this.apiBase + "/apis";
     }
 
     static get token(): string{
@@ -17,7 +24,7 @@ class global{
     }
 
     static get ws_path(): string{
-        return this.ws_path_;
+        return this.wsBase + "/ws";
     }
 }
 
