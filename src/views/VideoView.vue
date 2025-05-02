@@ -311,7 +311,7 @@ onUnmounted(() => {
 
             <div class="author-details">
               <h3 class="author-name">{{ author?.nickname }}</h3>
-              <p class="author-stats">{{ formatCount(author?.fans_num || 0) }} 粉丝</p>
+              <p class="author-stats">{{ formatCount(author?.fan_num || 0) }} 粉丝</p>
             </div>
           </div>
 

@@ -11,7 +11,7 @@ type User = {
     avatar?: string,
     description?: string,
     is_followed?: boolean,
-    fans_num?: number,
+    fan_num?: number,
 }
 
 
