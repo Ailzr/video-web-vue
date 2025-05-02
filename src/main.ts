@@ -15,6 +15,7 @@ import HistoryView from './views/HistoryView.vue';
 import EditProfile from './views/EditProfile.vue';
 import MessageView from './views/MessageView.vue';
 import FavoriteView from './views/FavoriteView.vue';
+import FollowView from './views/FollowView.vue';
 
 const routes = [
     {
@@ -66,6 +67,11 @@ const routes = [
         name: "Favorite",
         path: "/favorites",
         component: FavoriteView
+    },
+    {
+        name: "Following",
+        path: "/following",
+        component: FollowView
     }
 ]
 
