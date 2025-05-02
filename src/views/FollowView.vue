@@ -96,7 +96,8 @@
   import follow_manager from '../api/follow.ts';
   import { User } from '../api/user';
   import { useMessage } from 'naive-ui';
-  
+  import { global } from '../api/global';
+
   const router = useRouter();
   const message = useMessage();
   const following = ref<User[]>([]);
@@ -146,9 +147,10 @@
   
   // 发送私信
   const sendMessage = (user: User) => {
-    message.info(`即将向 ${user.nickname} 发送私信`);
+    // message.info(`即将向 ${user.nickname} 发送私信`);
     // 这里可以跳转到私信页面或打开私信对话框
-    // router.push(`/messages/${user.uuid}`);
+    global.currentChatUser = user.uuid || null;
+    router.push(`/message`);
   };
   
   // 跳转到用户主页

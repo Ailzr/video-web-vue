@@ -3,6 +3,7 @@ import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
 import { UserManager, getAvatarPath } from '../api/user';
 import follow_manager from '../api/follow';
 import { sendWebSocketMessage } from '../api/websocket';
+import { global } from '../api/global';
 import { 
   getContacts, 
   getMessages, 
@@ -205,6 +206,10 @@ onMounted(() => {
   contacts.value = getContacts();
   // 获取关注列表
   getFollowList();
+  //设置默认选中对象
+  if (global.currentChatUser) {
+    selectContact(contacts.value.find(c => c.uuid === global.currentChatUser) || contacts.value[0]);
+  }
   loading.value = false;
 });
 
