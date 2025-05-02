@@ -2,12 +2,12 @@
 import { NMessageProvider, NDialogProvider } from 'naive-ui';
 import Navigation from './components/Navigation.vue';
 import Footer from "./components/Footer.vue";
-import { onMounted, ref, watchEffect } from 'vue';
+import { onMounted, onUnmounted, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
-import { global } from './api/global';
-// WebSocket 连接
-const socket = ref<WebSocket | null>(null);
-const newMessageCount = ref(0);
+import { initWebSocket, cleanupWebSocket, newMessageCount } from './api/websocket';
+import { UserManager } from './api/user';
+import { setCurrentContact } from './api/message';
+import { ref } from 'vue';
 
 function initializeTheme() {
   const savedTheme = localStorage.getItem('theme');
@@ -22,35 +22,31 @@ function initializeTheme() {
   }
 }
 
-// 初始化 WebSocket 连接
-function initWebSocket() {
-  socket.value = new WebSocket(global.ws_path);
-
-  socket.value.onopen = () => {
-    console.log('WebSocket 连接已建立');
-  };
-
-  socket.value.onmessage = (event) => {
-    newMessageCount.value++;
-    // 可以在这里触发自定义事件，以便在各个组件中监听
-    window.dispatchEvent(new CustomEvent('new-message', { detail: event.data }));
-  };
-
-  socket.value.onclose = () => {
-    console.log('WebSocket 连接已关闭');
-  };
-}
-
+// 组件挂载
 onMounted(() => {
   initializeTheme();
-  initWebSocket();
+  if (UserManager.isLogin()) {
+    initWebSocket();
+  }
 });
 
+// 组件卸载清理
+onUnmounted(() => {
+  cleanupWebSocket();
+});
+
+// 路由监听
 const route = useRoute();
+const currentRoutePath = ref(route.path);
+
 watchEffect(() => {
-  // 当路由切换时，重置新消息计数
-  if (route.path === '/message') {
-    newMessageCount.value = 0;
+  currentRoutePath.value = route.path;
+});
+
+watchEffect(() => {
+  if (currentRoutePath.value !== '/message') {
+    // 离开消息页面时，清除当前选中的联系人
+    setCurrentContact(null);
   }
 });
 </script>
@@ -73,4 +69,4 @@ watchEffect(() => {
 #app {
   font-family: Arial, sans-serif;
 }
-</style>    
+</style>

@@ -205,6 +205,14 @@ class UserManager{
             return null;
         }
     }
+
+    public async getUserInfoByUuid(uuid: string): Promise<User | null> {
+        let response = await axios.get(`${this.uri_}/info/${uuid}`)
+        if (response.status !== 200 || response.data.code !== 200){
+            return null;
+        }
+        return response.data.data.user;
+    }
     
     // public async getUserProfile(): Promise<{email: string, nickname: string, description: string} | null> {
     //     try {

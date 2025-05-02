@@ -150,7 +150,7 @@ import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { NPopover } from "naive-ui";
 import { UserManager } from "../api/user";
-
+import { global } from "../api/global";
 const router = useRouter();
 const route = useRoute();
 
@@ -206,6 +206,9 @@ const logout = () => {
   localStorage.removeItem("video-web-golang-token");
   localStorage.removeItem("video-web-golang-uuid");
   localStorage.removeItem("video-web-golang-username");
+  global.token = "";
+  global.socket?.close();
+  global.currentChatUser = null;
   refresh_username();
   router.push('/');
 };
