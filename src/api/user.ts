@@ -233,6 +233,9 @@ class UserManager{
 }
 
 function getAvatarPath(avatar: string): string{
+    if (avatar === ""){
+        return DefaultAvatar;
+    }
     return `${global.path}/user/${avatar}`;
 }
 
