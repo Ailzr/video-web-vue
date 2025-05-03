@@ -166,8 +166,8 @@ const mobileMenuOpen = ref(false);
 
 const navLinks = [
   { text: '首页', href: '/' },
-  { text: '热门', href: '/trending' },
-  { text: '分类', href: '/categories' },
+  { text: '热门', href: '/#' },
+  { text: '分类', href: '/#' },
   { text: '关注', href: '/following' },
 ];
 
