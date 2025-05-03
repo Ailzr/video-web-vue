@@ -11,8 +11,6 @@ export const socket = ref<WebSocket | null>(null);
 // 重连相关配置
 let reconnectAttempts = 0;
 const maxReconnectAttempts = 5;
-const reconnectInterval = 5000;
-let heartbeatTimer: number | null = null;
 
 // 初始化WebSocket连接
 export function initWebSocket() {
@@ -25,10 +23,14 @@ export function initWebSocket() {
     console.log('WebSocket 连接已建立');
     isConnected.value = true;
     reconnectAttempts = 0;
-    startHeartbeat();
   };
 
   socket.value.onmessage = (event) => {
+    //收到ping消息，响应pong
+    if (event.data === 'ping') {
+      socket.value?.send(JSON.stringify({ type: 'pong' }));
+      return
+    }
     handleMessage(event.data);
   };
 
@@ -48,8 +50,8 @@ export function initWebSocket() {
 // 处理接收消息
 function handleMessage(data: string) {
   try {
+    console.log('收到消息:', data);
     const message = JSON.parse(data);
-    if (message.type === 'heartbeat') return;
 
     console.log('收到消息:', message);
     
@@ -77,25 +79,14 @@ function handleMessage(data: string) {
   }
 }
 
-// 心跳机制
-function startHeartbeat() {
-  if (heartbeatTimer) clearInterval(heartbeatTimer);
-  
-  heartbeatTimer = setInterval(() => {
-    if (socket.value?.readyState === WebSocket.OPEN) {
-      socket.value.send(JSON.stringify({ type: 'heartbeat' }));
-    }
-  }, 30000) as unknown as number;
-}
-
-// 重连处理
 function handleReconnect() {
+  cleanupWebSocket(); // 清理旧连接
   if (reconnectAttempts < maxReconnectAttempts) {
-    reconnectAttempts++;
+    const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000);
     setTimeout(() => {
-      console.log(`尝试重连 (${reconnectAttempts}/${maxReconnectAttempts})`);
       initWebSocket();
-    }, reconnectInterval);
+    }, delay);
+    reconnectAttempts++;
   }
 }
 
@@ -121,8 +112,8 @@ export function sendWebSocketMessage(message: any) {
 
 // 清理连接
 export function cleanupWebSocket() {
-  if (heartbeatTimer) clearInterval(heartbeatTimer);
   if (socket.value) {
+    socket.value.onclose = null; // 避免触发重连
     socket.value.close();
     socket.value = null;
   }
