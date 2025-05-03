@@ -151,6 +151,7 @@ import { useRouter, useRoute } from "vue-router";
 import { NPopover } from "naive-ui";
 import { UserManager } from "../api/user";
 import { global } from "../api/global";
+import { clearMessageStore } from "../api/message";
 const router = useRouter();
 const route = useRoute();
 
@@ -209,6 +210,7 @@ const logout = () => {
   global.token = "";
   global.socket?.close();
   global.currentChatUser = null;
+  clearMessageStore();
   refresh_username();
   router.push('/');
 };

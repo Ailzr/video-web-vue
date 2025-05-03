@@ -176,5 +176,17 @@ export function updateContactsFromFollowList(followList: any[]) {
   saveToStorage();
 }
 
+export function clearMessageStore() {
+  try {
+    localStorage.removeItem('message_store');
+    localStorage.removeItem('contacts');
+    Object.assign(messageStore, {});
+    contacts.value = [];
+    currentContactId.value = null;
+  } catch (error) {
+    console.error('保存消息失败:', error);
+  }
+}
+
 // 初始化
 initMessageStore();
