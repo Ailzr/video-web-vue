@@ -6,12 +6,12 @@
         
         <ul class="nav-links">
           <li v-for="(link, index) in navLinks" :key="index">
-            <a 
-              :href="link.href" 
+            <router-link
+              :to="link.href" 
               :class="{ 'active': isActiveLink(link.href) }"
             >
               {{ link.text }}
-            </a>
+            </router-link>
           </li>
         </ul>
       </div>
@@ -40,8 +40,8 @@
         <!-- User Actions -->
         <ul class="user-actions">
           <li v-for="(action, index) in userActions" :key="index">
-            <a 
-              :href="action.href" 
+            <router-link
+              :to="action.href" 
               :class="{ 
                 'active': isActiveLink(action.href),
                 'message-link': action.text === '消息'
@@ -53,7 +53,7 @@
                 v-if="action.text === '消息' && props.newMessageCount > 0" 
                 class="red-dot"
               >{{ props.newMessageCount > 9 ? '9+' : props.newMessageCount }}</span>
-            </a>
+            </router-link>
           </li>
           
           <!-- Theme Toggle -->
@@ -114,19 +114,19 @@
     <div class="mobile-menu" v-if="mobileMenuOpen">
       <ul class="mobile-nav-links">
         <li v-for="(link, index) in navLinks" :key="index">
-          <a 
-            :href="link.href" 
+          <router-link
+            :to="link.href" 
             :class="{ 'active': isActiveLink(link.href) }"
           >
             {{ link.text }}
-          </a>
+          </router-link>
         </li>
       </ul>
       
       <ul class="mobile-user-actions">
         <li v-for="(action, index) in userActions" :key="index">
-          <a 
-            :href="action.href" 
+          <router-link
+            :to="action.href" 
             :class="{ 
               'active': isActiveLink(action.href),
               'message-link': action.text === '消息'
@@ -138,7 +138,7 @@
               v-if="action.text === '消息' && props.newMessageCount > 0" 
               class="mobile-red-dot"
             >{{ props.newMessageCount > 9 ? '9+' : props.newMessageCount }}</span>
-          </a>
+          </router-link>
         </li>
       </ul>
     </div>
