@@ -185,11 +185,6 @@ function formatDate(timeString: string): string {
   return date.toLocaleDateString();
 }
 
-// 获取默认头像
-function getDefaultAvatar() {
-  return '/path/to/default-avatar.png';
-}
-
 // 过滤联系人列表
 const filteredContacts = computed(() => {
   if (!searchQuery.value) return contacts.value;
@@ -269,7 +264,7 @@ watch(messages, () => {
           @click="selectContact(contact)"
         >
           <div class="contact-avatar">
-            <img :src="contact.avatar ? getAvatarPath(contact.avatar) : getDefaultAvatar()" alt="用户头像">
+            <img :src="getAvatarPath(contact.avatar || '')" alt="用户头像">
             <span v-if="contact.unreadCount > 0" class="unread-badge">{{ contact.unreadCount }}</span>
           </div>
           <div class="contact-info">
@@ -298,7 +293,7 @@ watch(messages, () => {
           <div class="chat-user-info">
             <div class="chat-avatar">
               <img 
-                :src="selectedContact.avatar ? getAvatarPath(selectedContact.avatar) : getDefaultAvatar()" 
+                :src="getAvatarPath(selectedContact.avatar || '')" 
                 alt="用户头像"
               >
             </div>
@@ -334,7 +329,7 @@ watch(messages, () => {
                 <!-- 对方头像 - 只在非自己发送的消息显示在左侧 -->
                 <div class="message-avatar" v-if="!msg.is_self">
                   <img 
-                    :src="selectedContact.avatar ? getAvatarPath(selectedContact.avatar) : getDefaultAvatar()" 
+                    :src="getAvatarPath(selectedContact.avatar || '')" 
                     alt="用户头像"
                   >
                 </div>
