@@ -9,7 +9,7 @@ import Index from "./views/Index.vue";
 import VideoView from "./views/VideoView.vue";
 import RegisterAndLogin from './views/RegisterAndLogin.vue';
 import UploadView from './views/UploadView.vue';
-import Profile from './views/Profile.vue';
+import ProfileView from './views/ProfileView.vue';
 import SearchView from "./views/SearchView.vue";
 import HistoryView from './views/HistoryView.vue';
 import EditProfile from './views/EditProfile.vue';
@@ -40,8 +40,8 @@ const routes = [
     },
     {
         name: "Profile",
-        path: "/profile/:username",
-        component: Profile
+        path: "/profile/:user_id",
+        component: ProfileView
     },
     {
         name: "History",

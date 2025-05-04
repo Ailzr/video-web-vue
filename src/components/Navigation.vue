@@ -192,7 +192,7 @@ const go_user_page = () => {
     return;
   }
   refresh_username();
-  router.push({ name: 'Profile', params: { username: username.value } });
+  router.push({ name: 'Profile', params: { user_id: UserManager.getUserId } });
 };
 
 const edit_user_info = () => {

@@ -9,6 +9,7 @@ import favorite_manager from "../api/favorite";
 import { useMessage } from "naive-ui";
 import { User, getAvatarPath, UserManager } from "../api/user.ts";
 import follow_manager from "../api/follow";
+import { useRouter } from "vue-router";
 import DPlayer from 'dplayer';
 
 // const router = useRouter();
@@ -32,7 +33,7 @@ const isLiked = ref(false);
 const isFavorite = ref(false);
 const isFollowed = ref(false);
 const author = ref<User | null>(null);
-
+const router = useRouter();
 // 音量控制
 const volume = ref(0.7); // 默认音量
 
@@ -168,11 +169,11 @@ const toggleFollow = async () => {
 
 // 跳转到作者主页
 const goToAuthorProfile = () => {
-  message.error("敬请期待");
-  return;
-  // if (author.value?.nickname) {
-  //   router.push({ name: 'Profile', params: { username: author.value.nickname } });
-  // }
+  // message.error("敬请期待");
+  // return;
+  if (author.value?.uuid) {
+    router.push({ name: 'Profile', params: { user_id: author.value.uuid } });
+  }
 };
 
 // 格式化数字

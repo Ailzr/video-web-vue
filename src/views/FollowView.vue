@@ -155,7 +155,7 @@
   
   // 跳转到用户主页
   const goToUserProfile = (user: User) => {
-    router.push({ name: 'Profile', params: { username: user.nickname } });
+    router.push({ name: 'Profile', params: { user_id: user.uuid } });
   };
   
   // 跳转到发现页面

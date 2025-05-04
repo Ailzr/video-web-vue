@@ -226,7 +226,7 @@ const handleEdit = async () => {
   const result = await my_video_manager.editVideo(updatedVideo);
   if (result === '') {
     message.success('视频信息更新成功');
-    router.push({name:"Profile"});
+    router.push({name:"Profile", params: { user_id: UserManager.getUserId }});
   } else {
     message.error(`更新失败: ${result}`);
   }

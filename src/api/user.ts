@@ -87,29 +87,10 @@ class UserManager{
         return response.data.code === 200;
     }
 
-    public async getHistoryList(page: Number){
-        let response = await axios.get(
-            `${this.uri_}/get-history?page=${page}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${global.token}`,
-                }
-            }
-        )
-        if (response.status !== 200 || response.data.code !== 200){
-            return null;
-        }
-        return response.data.data.history_list;
-    }
 
-    public async getUserVideo(page: Number){
+    public async getUserVideo(userId: string, page: Number){
         let response = await axios.get(
-            `${this.uri_}/get-user-video?page=${page}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${global.token}`,
-                }
-            }
+            `${this.uri_}/videos?user_id=${userId}&page=${page}`
         )
         if (response.status !== 200 || response.data.code !== 200){
             return null
