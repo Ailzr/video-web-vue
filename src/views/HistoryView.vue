@@ -112,9 +112,9 @@
     try {
       loading.value = true;
       const history_list = await history_manager.getHistoryList(pageNum);
-      
-      // Assuming the API returns total pages info, otherwise estimate
-      // This is a placeholder - adjust based on your actual API
+      if (history_list === null || history_list.length === 0){
+        return;
+      }
       totalPages.value = Math.ceil(history_list.length / 20) || 1;
       
       video_list.value = await my_video_manager.getVideoListByIds(history_list);
