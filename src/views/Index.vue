@@ -1,33 +1,10 @@
 <template>
   <div class="home-page">
-    <!-- Hero Section
-    <section class="hero-section">
-      <div class="hero-content">
-        <h1 class="hero-title">发现精彩视频</h1>
-        <p class="hero-subtitle">探索、观看和分享您喜爱的内容</p>
-        <div class="hero-search">
-          <input 
-            type="text" 
-            placeholder="搜索视频..." 
-            v-model="searchQuery"
-            @keyup.enter="handleSearch"
-          />
-          <button @click="handleSearch">
-            <span class="search-icon">🔍</span>
-          </button>
-        </div>
-      </div>
-    </section> -->
 
     <!-- Featured Section -->
     <section class="content-section">
       <div class="section-header">
         <h2 class="section-title">推荐视频</h2>
-        <!-- <div class="section-actions">
-          <button class="theme-toggle" @click="toggleTheme">
-            {{ isDarkMode ? '☀️' : '🌙' }}
-          </button>
-        </div> -->
       </div>
       
       <div v-if="loading" class="loading-container">
@@ -89,12 +66,66 @@ const currentPage = ref(1);
 
 // Categories
 const categories = ref([
-  { id: 'entertainment', name: '娱乐', icon: '🎭' },
-  { id: 'education', name: '教育', icon: '📚' },
-  { id: 'gaming', name: '游戏', icon: '🎮' },
-  { id: 'music', name: '音乐', icon: '🎵' },
-  { id: 'sports', name: '体育', icon: '⚽' },
-  { id: 'technology', name: '科技', icon: '💻' }
+{ 
+      id: "entertainment", 
+      name: "娱乐", 
+      icon: "🎭", 
+      description: "包含各类娱乐节目、综艺、搞笑视频等轻松有趣的内容" 
+    },
+    { 
+      id: "gaming", 
+      name: "游戏", 
+      icon: "🎮", 
+      description: "游戏实况、攻略、解说和电子竞技相关的视频内容" 
+    },
+    { 
+      id: "education", 
+      name: "教育", 
+      icon: "📚", 
+      description: "涵盖各类学习教程、知识分享、讲座和教育资源" 
+    },
+    { 
+      id: "technology", 
+      name: "科技", 
+      icon: "💻", 
+      description: "最新科技资讯、产品评测、科技趋势和数码内容" 
+    },
+    { 
+      id: "music", 
+      name: "音乐", 
+      icon: "🎵", 
+      description: "音乐视频、MV、演唱会、乐器演奏和音乐教学" 
+    },
+    { 
+      id: "sports", 
+      name: "体育", 
+      icon: "⚽", 
+      description: "体育赛事、健身教程、运动技巧和体育资讯" 
+    },
+    { 
+      id: "cooking", 
+      name: "美食", 
+      icon: "🍳", 
+      description: "烹饪教程、美食探店、食谱分享和饮食文化" 
+    },
+    { 
+      id: "travel", 
+      name: "旅游", 
+      icon: "✈️", 
+      description: "旅行vlog、景点介绍、旅游攻略和文化体验" 
+    },
+    { 
+      id: "fashion", 
+      name: "时尚", 
+      icon: "👗", 
+      description: "时尚穿搭、美妆教程、潮流趋势和时尚资讯" 
+    },
+    { 
+      id: "animation", 
+      name: "动画", 
+      icon: "🎨", 
+      description: "动画作品、动漫资讯、二次元文化和创作分享" 
+    }
 ]);
 
 // Load initial videos
@@ -123,40 +154,10 @@ const loadMoreVideos = async () => {
   }
 };
 
-// // Handle search
-// const handleSearch = () => {
-//   if (searchQuery.value.trim()) {
-//     router.push({ name: 'Search', params: { keyword: searchQuery.value } });
-//   }
-// };
-
 // Navigate to category
 const navigateToCategory = (categoryId: string) => {
-  router.push({ name: 'Search', params: { keyword: categoryId } });
+  router.push({ name: 'Category', params: { categoryId: categoryId } });
 };
-
-// // Toggle theme
-// const toggleTheme = () => {
-//   const newTheme = isDarkMode.value ? 'light' : 'dark';
-//   isDarkMode.value = !isDarkMode.value;
-  
-//   // 更新 DOM 和 localStorage
-//   if (newTheme === 'dark') {
-//     document.documentElement.classList.add('dark');
-//   } else {
-//     document.documentElement.classList.remove('dark');
-//   }
-//   localStorage.setItem('theme', newTheme);
-// };
-
-// // Initialize theme
-// const initTheme = () => {
-//   if (isDarkMode.value) {
-//     document.documentElement.classList.add('dark');
-//   } else {
-//     document.documentElement.classList.remove('dark');
-//   }
-// };
 
 // Refresh token and load videos on mount
 onMounted(async () => {

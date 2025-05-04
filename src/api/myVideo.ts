@@ -83,6 +83,16 @@ class myVideoManager {
         return response.data.data.video_list;
     }
 
+    public async getVideoListByCategory(categoryId: string, page: number) {
+        let response = await axios.get(
+            `${this.uri_}/get-video-list-by-category?category_id=${categoryId}&page=${page}`,
+        )
+        if (response.status !== 200 || response.data.code !== 200){
+            return null;
+        }
+        return response.data.data.video_list;
+    }
+
     public async deleteVideo(videoId: string) : Promise<string>{
         let response = await axios.delete(
             `${this.uri_}/delete?video_id=${videoId}`,

@@ -95,7 +95,10 @@
             <option value="music">音乐</option>
             <option value="sports">体育</option>
             <option value="technology">科技</option>
-            <option value="other">其他</option>
+            <option value="cooking">美食</option>
+            <option value="travel">旅游</option>
+            <option value="fashion">时尚</option>
+            <option value="animation">动画</option>
           </select>
         </div>
         

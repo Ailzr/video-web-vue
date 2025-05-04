@@ -16,6 +16,7 @@ import EditProfile from './views/EditProfile.vue';
 import MessageView from './views/MessageView.vue';
 import FavoriteView from './views/FavoriteView.vue';
 import FollowView from './views/FollowView.vue';
+import CategoryView from './views/CategoryView.vue';
 
 const routes = [
     {
@@ -72,6 +73,11 @@ const routes = [
         name: "Following",
         path: "/following",
         component: FollowView
+    },
+    {
+        name: 'Category',
+        path: '/category/:categoryId?',
+        component: CategoryView
     }
 ]
 
