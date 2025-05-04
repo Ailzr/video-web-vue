@@ -98,6 +98,7 @@
   import VideoGrid from '../components/VideoGrid.vue';
   import my_video_manager, { myVideo } from '../api/myVideo';
   import { useMessage } from 'naive-ui';
+  import history_manager from '../api/history';
   // State
   const router = useRouter();
   const user_manager = new UserManager();
@@ -232,17 +233,16 @@
     //TODO 清空历史记录
     try {
       loading.value = true;
-      message.success('功能开发中');
-      // Assuming there's a clearHistory method in UserManager
-      // If not, you'll need to implement this API call
-    //   const success = await user_manager.clearHistory();
-      
-    //   if (success) {
-    //     video_list.value = [];
-    //     showClearConfirm.value = false;
-    //   }
+      const res = await history_manager.clearAllHistory();
+      if (res) {
+        message.success('清空成功');
+        video_list.value = [];
+        showClearConfirm.value = false;
+      } else {
+        message.error('清空失败');
+      }
     } catch (error) {
-      console.error('Failed to clear history:', error);
+      message.error('清空失败');
     } finally {
       loading.value = false;
     }
