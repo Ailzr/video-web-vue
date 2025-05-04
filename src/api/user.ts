@@ -136,6 +136,8 @@ class UserManager{
             }
             // console.log("刷新成功");
             localStorage.setItem("video-web-golang-token", response.data.data.token);
+            // 把global存储的token也刷新一下
+            global.token = response.data.data.token
             return;
         }
     }
