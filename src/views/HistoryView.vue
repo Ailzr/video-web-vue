@@ -92,7 +92,6 @@
   </template>
   
   <script setup lang="ts">
-  import { UserManager } from '../api/user';
   import { ref, computed, onMounted } from "vue";
   import { useRouter } from 'vue-router';
   import VideoGrid from '../components/VideoGrid.vue';
@@ -101,7 +100,6 @@
   import history_manager from '../api/history';
   // State
   const router = useRouter();
-  const user_manager = new UserManager();
   const page = ref(1);
   const totalPages = ref(1);
   const loading = ref(true);
@@ -113,7 +111,7 @@
   const fetchHistory = async (pageNum: number) => {
     try {
       loading.value = true;
-      const history_list = await user_manager.getHistoryList(pageNum);
+      const history_list = await history_manager.getHistoryList(pageNum);
       
       // Assuming the API returns total pages info, otherwise estimate
       // This is a placeholder - adjust based on your actual API
